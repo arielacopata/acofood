@@ -169,3 +169,137 @@
   z-index: 9999;
   background: var(--bg, #fff);
 }
+
+/* Arreglar auth-section para temas */
+#auth-section .btn {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+#auth-section .btn:hover {
+    background: var(--hover-bg);
+}
+
+/* Arreglar input de búsqueda para temas */
+#search-input {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+#search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Si necesitas agregar las variables CSS que faltan */
+:root {
+    --hover-bg: #f5f5f5;
+    --text-secondary: #666;
+}
+
+:root.dark {
+    --hover-bg: #333;
+    --text-secondary: #999;
+}
+
+#auth-section {
+    margin-right: 8px;
+}
+
+#auth-section .btn {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+.backdrop[data-modal="user-code"] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.backdrop[data-modal="user-code"] .modal {
+    background: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.backdrop[data-modal="user-code"] .modal h3 {
+    color: var(--text-color) !important;
+    margin-bottom: 16px;
+}
+
+.backdrop[data-modal="user-code"] .modal input {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin: 12px 0;
+    background: var(--bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.backdrop[data-modal="user-code"] .modal .btn {
+    background: var(--primary) !important;
+    color: white !important;
+    border: none;
+    padding: 10px 16px;
+    margin: 0 4px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.backdrop[data-modal="user-code"] .modal .sub {
+    color: var(--text-secondary) !important;
+}
+/* Modal de código de usuario - forzar estilos */
+div[data-modal="user-code"] {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 9999 !important;
+}
+
+div[data-modal="user-code"] .modal {
+    background: #1a1a1a !important;
+    color: white !important;
+    border: 2px solid #333 !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    max-width: 400px !important;
+    width: 90% !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Para tema claro */
+:root:not(.dark) div[data-modal="user-code"] .modal {
+    background: white !important;
+    color: black !important;
+    border-color: #ddd !important;
+}

@@ -2,8 +2,9 @@
 // Para añadir todos los alimentos, reemplaza el contenido de las dos
 // constantes de abajo con los archivos foods-data.js y nutrients-data.js
 document.addEventListener("DOMContentLoaded", () => {
-  const searchInput = document.querySelector('#search');
+  const searchInput = document.querySelector('#search-input');
   const searchBar   = document.querySelector('.searchbar');
+
 
   function floatSearch(on){
     searchBar?.classList.toggle('is-floating', !!on);
@@ -15,9 +16,216 @@ document.addEventListener("DOMContentLoaded", () => {
   searchInput.addEventListener('focus', ()=> floatSearch(true));
   searchInput.addEventListener('blur',  ()=> floatSearch(false));
 });
+
+
+// Crear/ingresar código de usuario
+function showUserCodeModal() {
+    // Eliminar modales existentes
+    document.querySelectorAll('[data-modal="user-code"]').forEach(el => el.remove());
+    
+    const modal = document.createElement('div');
+    modal.setAttribute('data-modal', 'user-code');
+    modal.innerHTML = `
+        <div class="modal">
+            <h3>Código Personal</h3>
+            <input type="text" id="userCodeInput" placeholder="Ej: juan2024" style="width: 100%; padding: 12px; margin: 16px 0; font-size: 16px;">
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="createCodeBtn" style="background: #007bff; color: white; border: none; padding: 10px 20px; margin: 0 8px; border-radius: 6px; cursor: pointer;">Acceder</button>
+                <button id="cancelCodeBtn" style="background: #6c757d; color: white; border: none; padding: 10px 20px; margin: 0 8px; border-radius: 6px; cursor: pointer;">Cancelar</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Event listeners inmediatos
+    const input = modal.querySelector('#userCodeInput');
+    const createBtn = modal.querySelector('#createCodeBtn');
+    const cancelBtn = modal.querySelector('#cancelCodeBtn');
+    
+    input.focus();
+    
+    createBtn.addEventListener('click', async () => {
+        const code = input.value.trim();
+        if (code.length >= 6) {
+            await loginWithCode(code);
+            modal.remove();
+        } else {
+            alert('Mínimo 6 caracteres');
+        }
+    });
+    
+    cancelBtn.addEventListener('click', () => {
+        modal.remove();
+    });
+    
+    // Cerrar con clic fuera
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+    
+    // Cerrar con ESC
+    const handleEsc = (e) => {
+        if (e.key === 'Escape') {
+            modal.remove();
+            document.removeEventListener('keydown', handleEsc);
+        }
+    };
+    document.addEventListener('keydown', handleEsc);
+}
+// Login con código
+async function loginWithCode(code) {
+    userCode = code.toLowerCase();
+    localStorage.setItem('acofood_usercode', userCode);
+    
+    await loadUserData();
+    updateUIForLoggedUser();
+    showToast(`Acceso con código: ${code}`);
+}
+
+// Cargar datos del usuario desde Supabase
+async function loadUserData() {
+    if (!userCode || !supabase) return;
+    
+    try {
+        // Cargar perfil del usuario
+        const { data: profile } = await supabase
+            .from('user_data')
+            .select('*')
+            .eq('user_code', userCode)
+            .eq('data_type', 'profile')
+            .single();
+        
+        if (profile) {
+            state.profile = profile.data.profile || {};
+            state.goals = profile.data.goals || { carbs: 65, protein: 20, fat: 15 };
+        }
+        
+        // Cargar historial del día actual
+        const { data: history } = await supabase
+            .from('user_data')
+            .select('*')
+            .eq('user_code', userCode)
+            .eq('data_type', 'daily')
+            .eq('date', todayKey)
+            .single();
+        
+        if (history) {
+            state.history = history.data.history || [];
+            dailyTotals = history.data.totals || {};
+            state.b12Taken = history.data.b12Taken || false;
+            state.b12DailyTask = history.data.b12DailyTask || false;
+        }
+        
+        populateProfileForm();
+        populateGoalsForm();
+        renderFoods();
+        
+    } catch (error) {
+        console.log('Error cargando datos del usuario:', error);
+    }
+}
+
+// Guardar datos en Supabase
+async function saveUserData() {
+    if (!userCode || !supabase) return;
+    
+    try {
+        // Guardar perfil
+        await supabase
+            .from('user_data')
+            .upsert({
+                user_code: userCode,
+                data_type: 'profile',
+                data: {
+                    profile: state.profile,
+                    goals: state.goals
+                }
+            });
+        
+        // Guardar datos del día
+        await supabase
+            .from('user_data')
+            .upsert({
+                user_code: userCode,
+                data_type: 'daily',
+                date: todayKey,
+                data: {
+                    history: state.history,
+                    totals: dailyTotals,
+                    b12Taken: state.b12Taken,
+                    b12DailyTask: state.b12DailyTask
+                }
+            });
+            
+    } catch (error) {
+        console.log('Error guardando datos:', error);
+    }
+}
+
+// Actualizar UI para usuario logueado
+function updateUIForLoggedUser() {
+    const authSection = document.getElementById('auth-section');
+    if (authSection) {
+        authSection.innerHTML = `
+            <span class="sub">Código: ${userCode}</span>
+            <button id="logoutBtn" class="btn" style="margin-left: 8px;">Cerrar Sesión</button>
+        `;
+        document.getElementById('logoutBtn').onclick = logout;
+    }
+}
+
+function updateUIForLoggedOut() {
+    const authSection = document.getElementById('auth-section');
+    if (authSection) {
+        authSection.innerHTML = `
+            <button id="loginCodeBtn" class="btn">Acceder con Código</button>
+        `;
+        document.getElementById('loginCodeBtn').onclick = showUserCodeModal;
+    }
+}
+// Cerrar sesión
+function logout() {
+    userCode = null;
+    localStorage.removeItem('acofood_usercode');
+    
+    // Limpiar datos locales
+    state.history = [];
+    dailyTotals = {};
+    state.profile = {};
+    state.goals = { carbs: 65, protein: 20, fat: 15 };
+    
+    updateUIForLoggedOut();
+    renderFoods();
+    showToast('Sesión cerrada');
+}
+
+// Modificar saveState para usar base de datos
+function saveState() {
+    if (userCode) {
+        saveUserData();
+    } else {
+        // Mantener localStorage como backup
+        localStorage.setItem('acofood_history_' + todayKey, JSON.stringify(state.history));
+        localStorage.setItem('acofood_totals_' + todayKey, JSON.stringify(dailyTotals));
+		localStorage.setItem('acofood_usage', JSON.stringify(foodUsage));
+        localStorage.setItem('acofood_profile', JSON.stringify(state.profile));
+        localStorage.setItem('acofood_goals', JSON.stringify(state.goals));
+        localStorage.setItem('acofood_b12_' + todayKey, JSON.stringify(state.b12Taken));
+        localStorage.setItem('acofood_b12Daily_' + todayKey, JSON.stringify(state.b12DailyTask));
+    }
+    renderHistoryAndTotals();
+}
+
+
+
 // Configuración Supabase
 // Configuración Supabase (con timing fix)
 let supabase = null;
+// Variables de estado de usuario
+let userCode = null;
 
 window.addEventListener('load', function() {
     const SUPABASE_URL = 'https://odqjwkdpqdwgkwztvzoi.supabase.co';
@@ -297,18 +505,6 @@ function downloadFile(filename, content) {
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
-}
-
-// --- STATE & RENDER ---
-function saveState() {
-  localStorage.setItem('acofood_history_' + todayKey, JSON.stringify(state.history));
-  localStorage.setItem('acofood_totals_' + todayKey, JSON.stringify(dailyTotals));
-  localStorage.setItem('acofood_usage', JSON.stringify(foodUsage));
-  localStorage.setItem('acofood_profile', JSON.stringify(state.profile));
-  localStorage.setItem('acofood_goals', JSON.stringify(state.goals));
-  localStorage.setItem('acofood_b12_' + todayKey, JSON.stringify(state.b12Taken)); // AGREGAR ESTA LÍNEA
-  localStorage.setItem('acofood_b12Daily_' + todayKey, JSON.stringify(state.b12DailyTask));
-  renderHistoryAndTotals();
 }
 
 function addRecord(food, text, isSupplement = false) {
@@ -605,16 +801,6 @@ function renderSupplements() {
     });
 }
 
-console.log('Llegué hasta aquí - antes de openB12Modal');
-function openB12Modal() {
-    document.getElementById('modalTitle').textContent = 'Vitamina B12';
-    document.getElementById('sectionVariants').style.display = 'none';
-    document.getElementById('sectionGrams').style.display = 'none';
-    document.getElementById('sectionSupplement').style.display = 'none';
-    document.getElementById('sectionB12').style.display = 'block';
-    document.getElementById('backdrop').style.display = 'flex';
-}
-
 function addB12(dose) {
     const supplement = { name: 'Vitamina B12', emoji: '💊' };
     addRecord(supplement, dose, true);
@@ -646,13 +832,6 @@ function openB12Modal() {
     document.getElementById('backdrop').style.display = 'flex';
 }
 
-function addB12(dose) {
-    const supplement = { name: 'Vitamina B12', emoji: '💊' };
-    addRecord(supplement, dose, true);
-    state.b12Taken = true;
-    saveState();
-    renderSupplements();
-}
 
 window.addB12 = addB12;
 
@@ -1120,7 +1299,7 @@ function resetAppData() {
 }
 
 // --- INITIALIZATION ---
-function init() {
+async function init() {
     // Load saved state
     dailyTotals = JSON.parse(localStorage.getItem('acofood_totals_' + todayKey) || '{}');
     state.history = JSON.parse(localStorage.getItem('acofood_history_' + todayKey) || '[]');
@@ -1260,6 +1439,15 @@ function init() {
     renderLayout();
     renderSupplements();
 	createMobileSearchElements();
+	
+	const savedCode = localStorage.getItem('acofood_usercode');
+		if (savedCode) {
+			await loginWithCode(savedCode);
+		} else {
+			updateUIForLoggedOut();
+		}
+
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
