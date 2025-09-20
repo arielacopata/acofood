@@ -83,14 +83,120 @@ function showUserCodeModal() {
 }
 // Login con código
 async function loginWithCode(code) {
-    userCode = code.toLowerCase();
-    localStorage.setItem('acofood_usercode', userCode);
-    
-    await loadUserData();
-    updateUIForLoggedUser();
-    showToast(`Acceso con código: ${code}`);
+    try {
+        // PRIMERO verificar si es admin
+        const { data: adminData, error: adminError } = await supabase
+            .from('admin_users')
+            .select('admin_code, name')
+            .eq('admin_code', code)
+            .single();
+        
+        if (adminData && !adminError) {
+            // Es admin - mostrar panel
+            showAdminPanel();
+            showToast(`Acceso admin: ${adminData.name}`);
+            return;
+        }
+        
+        // NO es admin - proceder como usuario normal
+        userCode = code.toLowerCase();
+        localStorage.setItem('acofood_usercode', userCode);
+        await loadUserData();
+        updateUIForLoggedUser();
+        showToast(`Conectado: ${code}`);
+        
+    } catch (error) {
+        console.error('Error en login:', error);
+        showToast('Error al conectar');
+    }
 }
 
+function showAdminPanel() {
+    // Remover panel existente si lo hay
+    const existingPanel = document.querySelector('[data-modal="admin-panel"]');
+    if (existingPanel) existingPanel.remove();
+    
+    const modal = document.createElement('div');
+    modal.className = 'backdrop';
+    modal.setAttribute('data-modal', 'admin-panel');
+    modal.style.display = 'flex';
+    modal.innerHTML = `
+        <div class="modal">
+            <h3>Panel de Admin</h3>
+            <input type="text" id="searchCodeInput" placeholder="Buscar código parcial..." style="width: 100%; padding: 12px; margin: 16px 0;">
+            <button id="searchCodesBtn" class="btn" style="margin: 8px;">Buscar</button>
+            <div id="searchResults" style="max-height: 300px; overflow-y: auto; margin: 16px 0;"></div>
+            <button id="closeAdminBtn" class="btn" style="margin: 8px;">Cerrar</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Event listeners
+    document.getElementById('searchCodesBtn').onclick = searchUserCodes;
+    document.getElementById('closeAdminBtn').onclick = () => modal.remove();
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+    };
+}
+
+function showAdminPanel() {
+    // Remover panel existente si lo hay
+    const existingPanel = document.querySelector('[data-modal="admin-panel"]');
+    if (existingPanel) existingPanel.remove();
+    
+    const modal = document.createElement('div');
+    modal.className = 'backdrop';
+    modal.setAttribute('data-modal', 'admin-panel');
+    modal.style.display = 'flex';
+    modal.innerHTML = `
+        <div class="modal">
+            <h3>Panel de Admin</h3>
+            <input type="text" id="searchCodeInput" placeholder="Buscar código parcial..." style="width: 100%; padding: 12px; margin: 16px 0;">
+            <button id="searchCodesBtn" class="btn" style="margin: 8px;">Buscar</button>
+            <div id="searchResults" style="max-height: 300px; overflow-y: auto; margin: 16px 0;"></div>
+            <button id="closeAdminBtn" class="btn" style="margin: 8px;">Cerrar</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Event listeners
+    document.getElementById('searchCodesBtn').onclick = searchUserCodes;
+    document.getElementById('closeAdminBtn').onclick = () => modal.remove();
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+    };
+}
+
+async function searchUserCodes() {
+    const partialCode = document.getElementById('searchCodeInput').value.trim();
+    if (!partialCode) return;
+    
+    try {
+        const { data: profiles } = await supabase
+            .from('user_data')
+            .select('user_code, data')
+            .ilike('user_code', `%${partialCode}%`)
+            .eq('data_type', 'profile');
+        
+        const resultsDiv = document.getElementById('searchResults');
+        if (!profiles || profiles.length === 0) {
+            resultsDiv.innerHTML = '<p>No se encontraron códigos</p>';
+        } else {
+            resultsDiv.innerHTML = profiles.map(item => 
+                `<div style="padding: 8px; border-bottom: 1px solid #333;">
+                    <strong>${item.user_code}</strong><br>
+                    <small>${item.data.profile?.name || 'Sin nombre'}</small>
+                </div>`
+            ).join('');
+        }
+        
+    } catch (error) {
+        console.error('Error buscando códigos:', error);
+        document.getElementById('searchResults').innerHTML = '<p>Error en la búsqueda</p>';
+    }
+}
 // Cargar datos del usuario desde Supabase
 async function loadUserData() {
     if (!userCode || !supabase) return;
