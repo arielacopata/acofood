@@ -1,0 +1,15 @@
+# Archivos temporales
+*.tmp
+*.log
+*.bak
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de prueba
+*.zip
+*.tar.gz
+
+# Bases de datos locales
+*.db
