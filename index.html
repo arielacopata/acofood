@@ -1,27 +1,224 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>AcoFood</title>
-  <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>AcoFood · Proto v3.0 (OnlineDB)</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>AcoFood</h1>
-    <div class="searchbar">
-      <input id="search" type="text" placeholder="Buscar alimento...">
+  <div id="toast"></div>
+
+  <!-- Settings Menu -->
+  <div id="settings-backdrop"></div>
+  <div id="settings-menu">
+      <div class="title" style="margin-bottom: 24px;">Configuración</div>
+      
+      <div class="settings-item">
+          <div class="sub" style="margin-bottom: 8px;">Ordenar alimentos por</div>
+          <div class="segmented" id="sort-order-segmented">
+              <button data-value="alpha">Alfabético</button>
+              <button data-value="usage">Más Usados</button>
+          </div>
+      </div>
+      <div class="settings-item">
+        <button class="chip" id="resetUsageBtn" style="width:100%;">Reiniciar orden de uso</button>
+      </div>
+
+      <details class="settings-group">
+        <summary>Metas de Macros</summary>
+        <div>
+           <div class="sub" id="macro-total-hint" style="text-align:right; margin-bottom: 10px;"></div>
+           <div class="settings-item">
+            <label for="goal-carbs">Carbohidratos</label>
+            <div class="inline"><input type="range" id="goal-carbs" min="0" max="100" step="5"><span id="carbs-value" class="sub" style="min-width: 40px; text-align: right;"></span></div>
+          </div>
+          <div class="settings-item">
+            <label for="goal-protein">Proteínas</label>
+             <div class="inline"><input type="range" id="goal-protein" min="0" max="100" step="5"><span id="protein-value" class="sub" style="min-width: 40px; text-align: right;"></span></div>
+          </div>
+          <div class="settings-item">
+            <label for="goal-fat">Grasas</label>
+            <div class="inline"><input type="range" id="goal-fat" min="0" max="100" step="5"><span id="fat-value" class="sub" style="min-width: 40px; text-align: right;"></span></div>
+          </div>
+          <div class="settings-item">
+            <button class="chip" id="saveGoalsBtn" style="width:100%; background-color: var(--good); color: white;" disabled>Guardar Metas</button>
+          </div>
+        </div>
+      </details>
+
+      <details class="settings-group">
+        <summary>Perfil de Usuario</summary>
+        <div>
+          <div class="settings-item">
+            <label for="profile-name">Nombre</label>
+            <input type="text" id="profile-name" placeholder="Tu nombre">
+          </div>
+          <div class="settings-item">
+            <label for="profile-email">Correo</label>
+            <input type="email" id="profile-email" placeholder="tu@correo.com">
+          </div>
+          <div class="settings-item">
+            <label for="profile-dob">Fecha de Nacimiento</label>
+            <input type="date" id="profile-dob">
+          </div>
+          <div class="settings-item">
+            <label for="profile-gender">Sexo</label>
+            <select id="profile-gender">
+              <option value="">Seleccionar...</option>
+              <option value="male">Masculino</option>
+              <option value="female">Femenino</option>
+            </select>
+          </div>
+          <div class="settings-item">
+            <label for="profile-weight">Peso (kg)</label>
+            <input type="number" id="profile-weight" placeholder="Ej: 70">
+          </div>
+          <div class="settings-item">
+            <label for="profile-height">Altura (cm)</label>
+            <input type="number" id="profile-height" placeholder="Ej: 175">
+          </div>
+          <div class="settings-item">
+            <label for="profile-lifestyle">Estilo de Vida</label>
+            <select id="profile-lifestyle">
+              <option value="1">Sedentario</option>
+              <option value="2">Sedentario + Ejercicio</option>
+              <option value="3">Activo + Ejercicio</option>
+              <option value="4">Atleta</option>
+            </select>
+          </div>
+          <div class="settings-item">
+            <label for="profile-exercise">Nivel de Ejercicio</label>
+            <select id="profile-exercise"></select>
+          </div>
+          <div class="settings-item">
+            <label for="profile-expenditure">Gasto calórico de ayer (opcional)</label>
+            <input type="number" id="profile-expenditure" placeholder="kcal">
+          </div>
+          <div class="settings-item">
+             <button class="chip" id="saveProfileBtn" style="width:100%;">Guardar Perfil</button>
+          </div>
+        </div>
+      </details>
+      
+
+      <div class="settings-item" style="border-top: 1px solid var(--border); padding-top: 16px; margin-top:24px;">
+        <button class="chip" id="resetAppBtn" style="width:100%; background-color: var(--bad); color: white;">Borrar Datos de la App</button>
+      </div>
+  </div>
+
+  <div class="container">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="iconbtn" id="menuBtn">☰</button>
+      </div>
+      <div>
+        <div class="title" id="appTitle">AcoFood</div>
+        <div class="sub" id="today"></div>
+      </div>
+      <div class="topbar-right">
+        <button class="iconbtn" id="themeBtn">☀️</button>
+      </div>
     </div>
-  </header>
+    <div id="grid" class="grid"></div>
 
-  <main>
-    <section id="results"></section>
-  </main>
+    <div id="supplements-section">
+      <hr style="border:0; border-top: 1px solid var(--border); margin: 20px 0;">
+      <div class="sub" style="text-align:center; margin-bottom: 10px;">Suplementos</div>
+      <div id="supplements-grid" class="grid layoutB"></div>
+    </div>
 
-  <footer>
-    <p>AcoFood v0.1</p>
-  </footer>
+    <div class="footer">
+  <div style="background: var(--card); border:1px solid var(--border); border-radius:16px; margin-bottom: 10px; padding: 0;">
+    <input type="search" id="search-input" placeholder="🔎 Buscar alimento..." style="margin-bottom: 0;" />
+  </div>
+      <button class="card btn" id="historyBtn" style="width:100%;"><div class="emoji">📜</div><div>Historial y Totales</div></button>
+      <div id="history-panel" style="display:none;">
+        <div id="totals-summary-container"></div>
+        <div id="history-items-container"></div>
+      </div>
+    </div>
+  </div>
 
-  <script src="app.js"></script>
+  <!-- Main Modal -->
+  <div class="modal-backdrop" id="backdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="inline" style="justify-content:space-between;">
+        <div id="modalTitle" class="title" style="font-size:18px;"></div>
+        <button class="iconbtn" id="closeModal">✖️</button>
+      </div>
+      <div id="sectionVariants" class="section">
+        <div class="section-title">Elige una variedad</div>
+        <div class="row-buttons" id="variantsRow"></div>
+      </div>
+      <div id="sectionGrams" class="section">
+        <div class="section-title">Peso (g)</div>
+        <div class="row-buttons" id="gramsRow" style="grid-template-columns: repeat(3, 1fr);"></div>
+        <div class="inline" style="margin-top:8px;">
+          <input id="gramsInput" type="number" inputmode="numeric" placeholder="Gramos manuales" />
+          <button class="iconbtn" id="gramsAdd">OK</button>
+        </div>
+      </div>
+       <div id="sectionSupplement" class="section">
+        <div class="section-title">Dosis</div>
+        <div class="inline">
+          <input id="supplementInput" type="text" placeholder="Ej: 1 pastilla, 2500 mcg" />
+          <button class="iconbtn" id="supplementAdd">OK</button>
+        </div>
+      </div>
+	  <div id="sectionB12" class="section">
+		<div class="section-title">Dosis de B12</div>
+		<div class="row-buttons" style="grid-template-columns: repeat(3, 1fr);">
+			<button class="chip" onclick="addB12('500 mcg')">500 mcg</button>
+			<button class="chip" onclick="addB12('1000 mcg')">1000 mcg</button>
+			<button class="chip" onclick="addB12('3500 mcg')">3500 mcg</button>
+	</div>
+</div>
+    </div>
+  </div>
+
+  <!-- Report Modal -->
+  <div class="modal-backdrop" id="report-backdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="inline" style="justify-content:space-between;">
+        <div class="title" style="font-size:18px;">Reporte Nutricional</div>
+        <button class="iconbtn" id="closeReportModal">✖️</button>
+      </div>
+      <div id="report-content" style="margin-top: 16px; max-height: 400px; overflow-y: auto; font-size: 14px;"></div>
+      <button class="iconbtn" id="exportReportBtn" style="width: 100%; margin-top: 16px;">Exportar Reporte</button>
+    </div>
+  </div>
+
+  <!-- Import/Export Modal -->
+  <div class="modal-backdrop" id="io-backdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="inline" style="justify-content:space-between;">
+        <div class="title" style="font-size:18px;">Importar / Exportar</div>
+        <button class="iconbtn" id="closeIOModal">✖️</button>
+      </div>
+      <div class="section">
+        <div class="section-title">Exportar Datos del Día</div>
+        <div class="row-buttons">
+          <button class="chip" id="exportTxtBtn">Como Texto (para Zepp)</button>
+          <button class="chip" id="exportJsonBtn">Como Archivo (Backup)</button>
+        </div>
+        <div class="section-title" style="margin-top: 16px;">Rango de Fechas (Próximamente)</div>
+        <div class="inline" style="gap: 16px;">
+            <input type="date" id="startDate" disabled>
+            <input type="date" id="endDate" disabled>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Importar Datos</div>
+        <input type="file" id="importJsonInput" accept=".json" style="display:none;"/>
+        <button class="chip" style="width:100%" onclick="document.getElementById('importJsonInput').click();">Importar desde Archivo</button>
+      </div>
+    </div>
+  </div>
+
+<script src="script.js"></script>
 </body>
 </html>
+"
+
