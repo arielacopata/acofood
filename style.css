@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #111;
+  color: #eee;
+}
+
+header {
+  background: #222;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.searchbar {
+  margin-top: .5rem;
+}
+
+.searchbar input {
+  width: 100%;
+  padding: .6rem;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background: #000;
+  color: #fff;
+}
+
+#results {
+  padding: 1rem;
+}
+
+.result-item {
+  padding: .6rem;
+  margin-bottom: .4rem;
+  background: #1e1e1e;
+  border-radius: 8px;
+}
