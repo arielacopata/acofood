@@ -2,8 +2,14 @@
 // Para añadir todos los alimentos, reemplaza el contenido de las dos
 // constantes de abajo con los archivos foods-data.js y nutrients-data.js
 document.addEventListener("DOMContentLoaded", () => {
-  const searchInput = document.querySelector('#search-input');
-  const searchBar   = document.querySelector('.searchbar');
+const searchInput = document.querySelector('#search-input');
+const searchBar = document.querySelector('.searchbar');
+
+if (searchInput && searchBar) {
+    // Solo ejecutar si ambos elementos existen
+    searchInput.addEventListener('focus', ()=> floatSearch(true));
+    searchInput.addEventListener('blur', ()=> floatSearch(false));
+}
 
 
   function floatSearch(on){
