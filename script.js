@@ -356,6 +356,7 @@ function createMobileSearchElements() {
     const resultsContainer = document.createElement('div');
     resultsContainer.className = 'search-results-mobile';
     resultsContainer.id = 'mobile-search-results';
+	resultsContainer.style.display = 'none'; // Agregar esta línea
     document.body.appendChild(resultsContainer);
 }
 
@@ -818,10 +819,10 @@ async function renderFoods(filter = '') {
     grid.innerHTML = '';
     
     // Add B12 daily task if not completed
-    if (!state.b12DailyTask) {
+    if (!state.b12DailyTask && userCode) {
         const taskCard = document.createElement('div');
         taskCard.className = 'card btn wide-tasks';
-        taskCard.innerHTML = `<div class="emoji">💊</div><div>Vitamina B12 - Tarea diaria</div>`;
+        taskCard.innerHTML = `<div class="emoji">💊</div><div>Vitamina B12</div>`;
         taskCard.addEventListener('click', () => {
             openB12Modal();
             state.b12DailyTask = true;
@@ -971,6 +972,7 @@ function openVariantModal(foodGroup) {
     document.getElementById('sectionVariants').style.display = 'block';
     document.getElementById('sectionGrams').style.display = 'none';
     document.getElementById('sectionSupplement').style.display = 'none';
+	document.getElementById('sectionB12').style.display = 'none'; 
     document.getElementById('backdrop').style.display = 'flex';
 }
 
