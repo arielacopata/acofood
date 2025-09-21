@@ -480,6 +480,12 @@ body.searching-mobile .search-results-mobile {
 
 /* ===== MEDIA QUERIES Y COMPORTAMIENTO ===== */
 
+@media (min-width: 769px) {
+    body, .container {
+        padding-bottom: 80px; /* Altura del cuadro de búsqueda + margen */
+    }
+}
+
 @media (max-width: 768px) {
     /* Mostrar versión mobile en pantallas pequeñas */
     .search-results-mobile {
@@ -501,6 +507,7 @@ body.searching-mobile .search-results-mobile {
         background: rgba(0,0,0,0.6) !important;
     }
 }
+
 
 /* ===== SCROLLBAR PERSONALIZADO ===== */
 
@@ -944,6 +951,22 @@ body.searching-mobile .search-results-mobile {
     height: 90px !important;
     text-transform: uppercase !important; /* SIEMPRE EN MAYÚSCULAS */
 }
+
+
+/* Para todos los tamaños */
+.supplements-section,
+.suplementos-section,
+#suplementos {
+    margin-top: 120px; /* Base para desktop */
+}
+
+/* Tu media query móvil existente que puede sobreescribir */
+@media (max-width: 768px) {
+    /* Lo que ya tienes + ajustes si necesitas */
+}
+
+
+
 
 /* Asegurar buen contraste en ambos temas */
 :root {

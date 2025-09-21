@@ -80,6 +80,24 @@ function showUserCodeModal() {
         }
     };
     document.addEventListener('keydown', handleEsc);
+	// AGREGAR ESTO después de los otros event listeners:
+
+// Enter para enviar
+input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Evitar comportamiento por defecto
+        
+        // Misma lógica que el botón "Acceder"
+        const code = input.value.trim();
+        if (code.length >= 6) {
+            loginWithCode(code).then(() => {
+                modal.remove();
+            });
+        } else {
+            alert('Mínimo 6 caracteres');
+        }
+    }
+});
 }
 // Login con código
 async function loginWithCode(code) {
