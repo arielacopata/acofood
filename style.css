@@ -897,6 +897,24 @@ body.searching-mobile .search-results-mobile {
     text-transform: uppercase !important; /* SIEMPRE EN MAYÚSCULAS */
 }
 
+/* Forzar mayúsculas en TODOS los estados para mobile */
+@media (max-width: 768px) {
+    .search-results-mobile #search-input {
+        text-transform: uppercase !important;
+    }
+    
+    #search-input {
+        text-transform: uppercase !important;
+    }
+    
+    /* Selector muy específico para asegurar que funcione */
+    body.searching-mobile .search-results-mobile #search-input {
+        text-transform: uppercase !important;
+        font-size: 30px !important;
+        font-weight: 600 !important;
+    }
+}
+
 :root.dark .search-results-mobile #search-input {
     background: #111827 !important;
     color: #ffffff !important;
