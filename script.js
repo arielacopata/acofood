@@ -333,16 +333,17 @@ function saveState() {
 
 
 
-// Configuración Supabase
-// Configuración Supabase (con timing fix)
-let supabase = null;
-// Variables de estado de usuario
-let userCode = null;
+	// Configuración Supabase
+	const SUPABASE_URL = 'https://odqjwkdpqdwgkwztvzoi.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kcWp3a2RwcWR3Z2t3enR2em9pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMzkxMjksImV4cCI6MjA3MzkxNTEyOX0.Qp2QHG4ozfzEndhkXlYbUtpHDR_7plMZEAKCnMJbB_Q';
+    
+	// Configuración Supabase (con timing fix)
+	let supabase = null;
+	// Variables de estado de usuario
+	let userCode = null;
 
 window.addEventListener('load', function() {
-    const SUPABASE_URL = 'https://odqjwkdpqdwgkwztvzoi.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kcWp3a2RwcWR3Z2t3enR2em9pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMzkxMjksImV4cCI6MjA3MzkxNTEyOX0.Qp2QHG4ozfzEndhkXlYbUtpHDR_7plMZEAKCnMJbB_Q';
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+	supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 });
 
 function createMobileSearchElements() {
@@ -714,13 +715,11 @@ async function renderMobileSearchResults(filter) {
         }
     }
     
-	allResults.sort((a, b) => {
-    // Locales primero (no tienen isOnline), online después (isOnline: true)
-    if (!a.isOnline && b.isOnline) return -1;
-    if (a.isOnline && !b.isOnline) return 1;
-    return 0; // mantener orden dentro de cada grupo
-	});
-
+		allResults.sort((a, b) => {
+			if (a.isOnline && !b.isOnline) return -1;  // Online va arriba
+			if (!a.isOnline && b.isOnline) return 1;   // Local va abajo  
+			return 0; // mantener orden dentro de cada grupo
+		});
 	
 	
     // Renderizar resultados
@@ -1578,5 +1577,5 @@ async function init() {
 
 }
 
-document.addEventListener('DOMContentLoaded', init);
+window.addEventListener('load', init);
 
