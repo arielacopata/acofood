@@ -55,7 +55,6 @@
     .topbar-left, .topbar-right { display: flex; }
     .topbar-right { justify-content: flex-end; }
     .iconbtn{ border:1px solid var(--border); background:var(--card); color:var(--fg); border-radius:10px; padding:6px 10px; cursor:pointer; }
-    #search-input { width: 100%; margin-bottom: 10px; box-sizing: border-box;}
     .report-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; flex-wrap: wrap;}
     .report-item .progress-bar-container { width: 100%; height: 6px; background-color: var(--border); border-radius: 3px; margin-top: 4px; }
     .report-item .progress-bar { height: 100%; border-radius: 3px; }
@@ -84,20 +83,6 @@
     .macro-bar { height: 8px; background-color: var(--border); border-radius: 4px; overflow: hidden; }
     .macro-bar-fill { height: 100%; transition: width 0.5s ease; }
 	/* Contenedor para resultados de búsqueda móvil */
-.search-results-mobile {
-    position: fixed;
-    bottom: 120px; /* Mantiene el comportamiento de abajo hacia arriba */
-    left: 10px;
-    right: 10px;
-    max-height: calc(100vh - 160px);
-    background: var(--card-bg, #1a1a1a);
-    border-radius: 12px;
-    overflow-y: auto;
-    z-index: 1000;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
-    border: 1px solid var(--border-color, #333);
-    display: none;
-}
 
 .search-backdrop {
     position: fixed;
@@ -105,61 +90,13 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.3);
     z-index: 999;
     display: none;
 }
 
-@media (max-width: 768px) {
-    .search-results-mobile {
-        display: block;
-    }
-    
-    body.searching-mobile #grid {
-        display: none;
-    }
-    
-    body.searching-mobile .search-backdrop {
-        display: block;
-    }
-}
 
-.search-results-mobile .search-result-item {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border-color, #333);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
 
-.search-results-mobile .search-result-item:hover {
-    background: rgba(255,255,255,0.05);
-}
-
-.search-results-mobile .search-result-item:last-child {
-    border-bottom: none;
-}
-
-.search-results-mobile .result-emoji {
-    font-size: 20px;
-    min-width: 24px;
-}
-
-.search-results-mobile .result-text {
-    flex: 1;
-}
-
-.search-results-mobile .result-name {
-    color: var(--text-color, #fff);
-    font-weight: 500;
-}
-
-.search-results-mobile .result-calories {
-    color: var(--text-secondary, #999);
-    font-size: 14px;
-}
 .searchbar.is-floating {
   position: fixed;
   left: 8px; right: 8px;
@@ -181,22 +118,6 @@
 
 #auth-section .btn:hover {
     background: var(--hover-bg);
-}
-
-/* Arreglar input de búsqueda para temas */
-#search-input {
-    background: var(--card-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-}
-
-#search-input::placeholder {
-    color: var(--text-secondary);
-}
-
-#search-input:focus {
-    outline: none;
-    border-color: var(--primary);
 }
 
 /* Si necesitas agregar las variables CSS que faltan */
@@ -345,3 +266,302 @@ div[data-modal="admin-panel"] .modal .btn {
     border-radius: 6px !important;
     cursor: pointer !important;
 }
+/* Fix para líneas que atraviesan modales */
+.modal * {
+    border: none !important;
+    border-bottom: none !important;
+    border-top: none !important;
+}
+
+/* Restaurar solo los borders necesarios */
+.modal {
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+}
+
+.chip {
+    border: 1px solid var(--border) !important;
+    border-radius: 6px !important;
+}
+
+/* Fix específico para secciones del modal */
+.modal #sectionB12,
+.modal #sectionGrams,
+.modal #sectionVariants {
+    border: none !important;
+}
+
+/* Si hay algún hr o separador */
+.modal hr {
+    display: none !important;
+}
+
+
+
+/* Variables CSS mejoradas para mejor contraste */
+:root {
+    --search-bg: #ffffff;
+    --search-text: #000000;
+    --search-placeholder: #666666;
+    --search-border: #d1d5db;
+    --search-border-focus: #3b82f6;
+}
+
+:root.dark {
+    --search-bg: #1f2937;
+    --search-text: #ffffff;
+    --search-placeholder: #9ca3af;
+    --search-border: #4b5563;
+    --search-border-focus: #60a5fa;
+}
+
+/* Definición única y limpia del input de búsqueda */
+#search-input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    
+    /* Colores con buen contraste */
+    background: var(--search-bg) !important;
+    color: var(--search-text) !important;
+    border: 1px solid var(--search-border) !important;
+    border-radius: 4px;
+    
+    /* Tipografía */
+    font-size: 14px;
+    font-family: inherit;
+    
+    /* Transición suave */
+    transition: border-color 0.2s ease;
+}
+
+/* Placeholder con mejor contraste */
+#search-input::placeholder {
+    color: var(--search-placeholder) !important;
+    opacity: 1 !important;
+}
+
+/* Estado de foco mejorado */
+#search-input:focus {
+    outline: none !important;
+    border-color: var(--search-border-focus) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Asegurar contraste en autocomplete */
+#search-input:-webkit-autofill,
+#search-input:-webkit-autofill:hover,
+#search-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--search-bg) inset !important;
+    -webkit-text-fill-color: var(--search-text) !important;
+}
+.search-container {
+    background: #ffffff !important; /* SÓLIDO, no transparente */
+    color: #000000 !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 20px;
+}
+/* ===== SEARCH RESULTS MOBILE - VERSIÓN CONSOLIDADA ===== */
+
+/* Configuración base: oculto por defecto */
+.search-results-mobile {
+    display: none !important;
+}
+
+/* Solo visible cuando está en modo búsqueda */
+body.searching-mobile .search-results-mobile {
+    /* Posicionamiento y tamaño */
+    display: block !important;
+    position: fixed !important;
+    bottom: 120px !important; /* Desde abajo hacia arriba */
+    left: 10px !important;
+    right: 10px !important;
+    max-height: calc(100vh - 200px) !important;
+    
+    /* Fondo SÓLIDO para contraste sobre backdrop */
+    background: #ffffff !important; /* Blanco sólido tema claro */
+    color: #000000 !important;
+    
+    /* Estilo visual */
+    border-radius: 12px !important;
+    border: 2px solid #e5e7eb !important;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.5) !important;
+    
+    /* Funcionalidad */
+    overflow-y: auto !important;
+    z-index: 1001 !important; /* Mayor que backdrop (999) */
+}
+
+/* Tema oscuro */
+:root.dark body.searching-mobile .search-results-mobile {
+    background: #1a1a1a !important; /* Negro sólido tema oscuro */
+    color: #ffffff !important;
+    border: 2px solid #4b5563 !important;
+}
+
+/* ===== ITEMS DE RESULTADOS ===== */
+
+/* Item individual */
+.search-results-mobile .search-result-item {
+    /* Layout */
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    
+    /* Separadores con contraste */
+    border-bottom: 1px solid #e5e7eb; /* Sólido tema claro */
+    
+    /* Fondo y transición */
+    background: #f8fafc; /* Fondo sutil tema claro */
+    transition: background 0.2s ease;
+}
+
+/* Tema oscuro para items */
+:root.dark .search-results-mobile .search-result-item {
+    border-bottom: 1px solid #4b5563;
+    background: #2d3748;
+}
+
+/* Hover states con colores sólidos */
+.search-results-mobile .search-result-item:hover {
+    background: #e2e8f0 !important; /* Gris claro tema claro */
+}
+
+:root.dark .search-results-mobile .search-result-item:hover {
+    background: #374151 !important; /* Gris oscuro tema oscuro */
+}
+
+/* Último item sin borde */
+.search-results-mobile .search-result-item:last-child {
+    border-bottom: none;
+}
+
+/* ===== ELEMENTOS INTERNOS ===== */
+
+/* Emoji */
+.search-results-mobile .result-emoji {
+    font-size: 20px;
+    min-width: 24px;
+}
+
+/* Contenedor de texto */
+.search-results-mobile .result-text {
+    flex: 1;
+}
+
+/* Nombre del alimento - MÁS GRANDE */
+.search-results-mobile .result-name {
+    color: #000000 !important; /* Negro tema claro */
+    font-weight: 600 !important; /* Más bold */
+    font-size: 18px !important; /* Más grande */
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+:root.dark .search-results-mobile .result-name {
+    color: #ffffff !important; /* Blanco tema oscuro */
+}
+
+/* Calorías MUCHO MÁS GRANDES y con mejor contraste */
+.search-results-mobile .result-calories {
+    color: #374151 !important; /* Gris MUCHO más oscuro tema claro */
+    font-size: 16px !important; /* Mucho más grande que 14px */
+    font-weight: 500 !important; /* Más pesado */
+    line-height: 1.4;
+}
+
+:root.dark .search-results-mobile .result-calories {
+    color: #d1d5db !important; /* Gris MUCHO más claro tema oscuro */
+}
+
+/* ===== MEDIA QUERIES Y COMPORTAMIENTO ===== */
+
+@media (max-width: 768px) {
+    /* Mostrar versión mobile en pantallas pequeñas */
+    .search-results-mobile {
+        display: block;
+    }
+    
+    /* Ocultar grid cuando se busca en mobile */
+    body.searching-mobile #grid {
+        display: none;
+    }
+    
+    /* Mostrar backdrop cuando se busca en mobile */
+    body.searching-mobile .search-backdrop {
+        display: block;
+    }
+    
+    /* Backdrop menos opaco en mobile para mejor legibilidad */
+    .search-backdrop {
+        background: rgba(0,0,0,0.6) !important;
+    }
+}
+
+/* ===== SCROLLBAR PERSONALIZADO ===== */
+
+.search-results-mobile::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results-mobile::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.search-results-mobile::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+:root.dark .search-results-mobile::-webkit-scrollbar-track {
+    background: #374151;
+}
+
+:root.dark .search-results-mobile::-webkit-scrollbar-thumb {
+    background: #6b7280;
+}
+
+/* ===== INPUT DE BÚSQUEDA DENTRO DEL MODAL - TEXTO MÁS GRANDE ===== */
+
+.search-results-mobile #search-input {
+    background: #f9fafb !important;
+    color: #000000 !important;
+    border: 2px solid #d1d5db !important;
+    margin: 15px;
+    width: calc(100% - 30px);
+    
+    /* TEXTO MÁS GRANDE Y VISIBLE */
+    font-size: 20px !important; /* Mucho más grande */
+    font-weight: 500 !important; /* Más bold */
+    padding: 16px !important; /* Más padding para que se vea mejor */
+    line-height: 1.4;
+}
+
+:root.dark .search-results-mobile #search-input {
+    background: #111827 !important;
+    color: #ffffff !important;
+    border: 2px solid #6b7280 !important;
+}
+
+/* INPUT GENERAL (fuera del modal también) */
+#search-input {
+    font-size: 18px !important; /* Consistente en todo lado */
+    font-weight: 500 !important;
+    padding: 16px !important;
+    line-height: 1.4;
+}
+
+
+/* Asegurar buen contraste en ambos temas */
+:root {
+    --text-secondary: #666;
+}
+
+:root.dark {
+    --text-secondary: #aaa;
+}
+
