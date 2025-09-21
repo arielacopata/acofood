@@ -714,6 +714,15 @@ async function renderMobileSearchResults(filter) {
         }
     }
     
+	allResults.sort((a, b) => {
+    // Locales primero (no tienen isOnline), online después (isOnline: true)
+    if (!a.isOnline && b.isOnline) return -1;
+    if (a.isOnline && !b.isOnline) return 1;
+    return 0; // mantener orden dentro de cada grupo
+	});
+
+	
+	
     // Renderizar resultados
     if (allResults.length === 0) {
         container.innerHTML = '<div style="padding: 16px; text-align: center; color: #999;">No se encontraron resultados</div>';
@@ -1089,7 +1098,13 @@ function renderHistoryAndTotals() {
     const goalPcts = state.goals;
     const macroScore = calculateMacroScore();
     
-    const microScore = Math.min(((dailyTotals['Fibra'] || 0) / 30) * 100, 100);
+    const microScores = Object.keys(nutrientRDAs).map(nutrient => {
+    const consumed = dailyTotals[nutrient] || 0;
+    const rda = nutrientRDAs[nutrient];
+    const percentage = (consumed / rda) * 100;
+    return Math.min(percentage, 100);
+	});
+	const microScore = microScores.reduce((sum, score) => sum + score, 0) / microScores.length;
 
     const circumference = 2 * Math.PI * 36;
 
