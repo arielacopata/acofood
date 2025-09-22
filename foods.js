@@ -35,7 +35,7 @@ const groupedFoods = [
   {"id": 4, "name": "Maní", "fullName": "Maní", "emoji": "🥜"},
   
   {"groupName": "Manzana", "emoji": "🍎", "variants": [
-  {"id": 52, "name": "Manzana Roja", "fullName": "Manzana Roja", "emoji": "🍎"},
+  {"id": 52, "name": "Manzana Roja", "fullName": "Manzana Roja"},
   {"id": 69, "name": "Manzana Verde", "fullName": "Manzana Verde"}
   ]},
   {"id": 6, "name": "Nueces", "fullName": "Nueces", "emoji": "🌰"},
