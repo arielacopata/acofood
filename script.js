@@ -419,123 +419,6 @@ window.buscarAlimentoEnDB = async function(termino) {
         return [];
     }
 };
-
-const groupedFoods = [
-  {"groupName": "Avena", "emoji": "🍚", "variants": [
-    {"id": 1, "name": "Arrollada", "fullName": "Avena (Arrollada)"},
-    {"id": 2, "name": "Laminada", "fullName": "Avena (Laminada)"}
-  ]},
-  {"id": 3, "name": "Banana", "fullName": "Banana", "emoji": "🍌"},
-  {"groupName": "Batata / Boniato", "emoji": "🍠", "variants": [
-    {"id": 18, "name": "Batata (Al horno)", "fullName": "Batata (Al horno)"},
-    {"id": 17, "name": "Batata", "fullName": "Batata (Cocido)"},
-    {"id": 16, "name": "Boniato (Al horno)", "fullName": "Boniato (Al horno)"},
-    {"id": 15, "name": "Boniato", "fullName": "Boniato (Cocido)"}
-  ]},
-  {"groupName": "Calabaza", "emoji": "🎃", "variants": [
-    {"id": 12, "name": "Cocida", "fullName": "Calabaza (Cocida)"},
-    {"id": 14, "name": "Cruda", "fullName": "Calabaza (Cruda)"},
-    {"id": 13, "name": "Sopa", "fullName": "Calabaza (Sopa)"}
-  ]},
-  {"groupName": "Cebolla", "emoji": "🧅", "variants": [
-    {"id": 8, "name": "Cocida", "fullName": "Cebolla (Cocida)"},
-    {"id": 7, "name": "Cruda", "fullName": "Cebolla (Cruda)"},
-    {"id": 9, "name": "Salteada", "fullName": "Cebolla (Salteada)"}
-  ]},
-  {"groupName": "Garbanzos", "emoji": "🥣", "variants": [
-    {"id": 11, "name": "Brotes (germinados)", "fullName": "Garbanzos (Brotes (germinados))"},
-    {"id": 10, "name": "Cocidos", "fullName": "Garbanzos (Cocidos)"},
-    {"id": 43, "name": "Tostados (pre-hidratados)", "fullName": "Garbanzos (Tostados (pre-hidratados))"}
-  ]},
-  {"id": 21, "name": "Lechuga", "fullName": "Lechuga", "emoji": "🥬"},
-  {"groupName": "Lentejas", "emoji": "🥣", "variants": [
-    {"id": 49, "name": "Lenteja (Marrón)", "fullName": "Lenteja (Marrón)"},
-    {"id": 50, "name": "Lenteja Roja", "fullName": "Lenteja Roja"},
-    {"id": 51, "name": "Lentejón (Lenteja verde)", "fullName": "Lentejón (Lenteja verde)"}
-  ]},
-  {"id": 5, "name": "Mandarina", "fullName": "Mandarina", "emoji": "🍊"},
-  {"id": 48, "name": "Naranja", "fullName": "Naranja", "emoji": "🍊"},
-  {"id": 4, "name": "Maní", "fullName": "Maní", "emoji": "🥜"},
-  {"id": 52, "name": "Manzana", "fullName": "Manzana", "emoji": "🍎"},
-  {"id": 6, "name": "Nueces", "fullName": "Nueces", "emoji": "🌰"},
-  {"groupName": "Palta", "emoji": "🥑", "variants": [
-    {"id": 22, "name": "Hass", "fullName": "Palta (Hass)"},
-    {"id": 42, "name": "Brasilera", "fullName": "Palta (Brasilera)"}
-  ]},
-  {"groupName": "Papa", "emoji": "🥔", "variants": [
-    {"id": 24, "name": "Al horno", "fullName": "Papa (Al horno)"},
-    {"id": 23, "name": "Cocida", "fullName": "Papa (Cocida)"}
-  ]},
-  {"groupName": "Porotos", "emoji": "🥣", "variants": [
-    {"id": 44, "name": "Blanco (Alubia)", "fullName": "Poroto Blanco (Alubia)"},
-    {"id": 47, "name": "Frutilla (Pinto)", "fullName": "Poroto Frutilla (Pinto)"},
-    {"id": 45, "name": "Negro", "fullName": "Poroto Negro"},
-    {"id": 46, "name": "Rojo", "fullName": "Poroto Rojo"}
-  ]},
-  {"id": 20, "name": "Quinoa (Cocida)", "fullName": "Quinoa (Cocida)", "emoji": "🍚"},
-  {"groupName": "Remolacha", "emoji": "🍠", "variants": [
-    {"id": 28, "name": "Al horno", "fullName": "Remolacha (Al horno)"},
-    {"id": 27, "name": "Hervida", "fullName": "Remolacha (Hervida)"},
-    {"id": 26, "name": "Rallada", "fullName": "Remolacha (Rallada)"}
-  ]},
-  {"id": 29, "name": "Rúcula", "fullName": "Rúcula", "emoji": "🌿"},
-  {"id": 30, "name": "Semillas de lino", "fullName": "Semillas de lino", "emoji": "🌱"},
-  {"id": 41, "name": "Soja texturizada", "fullName": "Soja texturizada", "emoji": "🥣"},
-  {"id": 31, "name": "Tomate", "fullName": "Tomate", "emoji": "🍅"},
-  {"groupName": "Zanahoria", "emoji": "🥕", "variants": [
-    {"id": 25, "name": "Cocida", "fullName": "Zanahoria (Cocida)"},
-    {"id": 33, "name": "Entera", "fullName": "Zanahoria (Entera)"},
-    {"id": 32, "name": "Rallada", "fullName": "Zanahoria (Rallada)"}
-  ]}
-];
-const nutrientsData = {
-  "1": {"Calorías": 371, "Proteínas": 13.1, "Carbohidratos": 68.4, "Fibra": 10.4, "Azúcares totales": 1.2, "Azúcares añadidos": 0, "Grasas totales": 6.8, "Grasas saturadas": 1.2, "Grasas trans": 0, "Calcio": 54, "Hierro": 4.7, "Magnesio": 177, "Fósforo": 523, "Potasio": 550, "Sodio": 2, "Zinc": 4, "Vitamina A": 0, "Vitamina C": 0, "Vitamina D": 0, "Vitamina E": 0.6, "Vitamina K": 1.9, "Vitamina B1 (Tiamina)": 0.8, "Vitamina B2 (Riboflavina)": 0.1, "Vitamina B3 (Niacina)": 0.9, "Vitamina B4 (Colina)": 32.2, "Vitamina B6": 0.1, "Vitamina B9 (Folato)": 38, "Vitamina B12": 0, "Omega-3": 0.11, "Omega-6": 1.7, "Omega-9": 1.6, "Colesterol": 0, "Cafeína": 0},
-  "2": {"Calorías": 375, "Proteínas": 13.5, "Carbohidratos": 67.5, "Fibra": 10.1, "Azúcares totales": 0, "Azúcares añadidos": 0, "Grasas totales": 7.5, "Grasas saturadas": 1.4, "Grasas trans": 0, "Calcio": 47, "Hierro": 4.25, "Magnesio": 138, "Fósforo": 410, "Potasio": 370, "Sodio": 6, "Zinc": 3.1, "Vitamina A": 0, "Vitamina C": 0, "Vitamina D": 0, "Vitamina E": 0, "Vitamina K": 0, "Vitamina B1 (Tiamina)": 0.46, "Vitamina B2 (Riboflavina)": 0.15, "Vitamina B3 (Niacina)": 1.125, "Vitamina B4 (Colina)": 0, "Vitamina B6": 0.1, "Vitamina B9 (Folato)": 32, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "3": {"Calorías": 89, "Proteínas": 1.09, "Carbohidratos": 22.84, "Fibra": 2.6, "Azúcares totales": 12.23, "Azúcares añadidos": 0, "Grasas totales": 0.33, "Grasas saturadas": 0.112, "Grasas trans": 0, "Calcio": 5, "Hierro": 0.26, "Magnesio": 27, "Fósforo": 22, "Potasio": 358, "Sodio": 1, "Zinc": 0.15, "Vitamina A": 3, "Vitamina C": 8.7, "Vitamina D": 0, "Vitamina E": 0.1, "Vitamina K": 0.5, "Vitamina B1 (Tiamina)": 0.031, "Vitamina B2 (Riboflavina)": 0.073, "Vitamina B3 (Niacina)": 0.665, "Vitamina B4 (Colina)": 9.8, "Vitamina B6": 0.367, "Vitamina B9 (Folato)": 20, "Vitamina B12": 0, "Omega-3": 0.027, "Omega-6": 0.046, "Omega-9": 0.032, "Colesterol": 0, "Cafeína": 0},
-  "4": {"Calorías": 587, "Proteínas": 24.35, "Carbohidratos": 21.26, "Fibra": 8, "Azúcares totales": 4.8, "Azúcares añadidos": 0, "Grasas totales": 50.45, "Grasas saturadas": 7.7, "Grasas trans": 0, "Calcio": 62, "Hierro": 2.26, "Magnesio": 176, "Fósforo": 390, "Potasio": 658, "Sodio": 5, "Zinc": 3.31, "Vitamina A": 0, "Vitamina C": 0, "Vitamina D": 0, "Vitamina E": 6.6, "Vitamina K": 0, "Vitamina B1 (Tiamina)": 0.23, "Vitamina B2 (Riboflavina)": 0.1, "Vitamina B3 (Niacina)": 13.53, "Vitamina B4 (Colina)": 55.4, "Vitamina B6": 0.45, "Vitamina B9 (Folato)": 145, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 15.69, "Omega-9": 25.04, "Colesterol": 0, "Cafeína": 0},
-  "5": {"Calorías": 53, "Proteínas": 0.81, "Carbohidratos": 13.34, "Fibra": 1.8, "Azúcares totales": 10.58, "Azúcares añadidos": 0, "Grasas totales": 0.31, "Grasas saturadas": 0.039, "Grasas trans": 0, "Calcio": 37, "Hierro": 0.15, "Magnesio": 12, "Fósforo": 20, "Potasio": 166, "Sodio": 2, "Zinc": 0.07, "Vitamina A": 34, "Vitamina C": 26.7, "Vitamina D": 0, "Vitamina E": 0.2, "Vitamina K": 0, "Vitamina B1 (Tiamina)": 0.058, "Vitamina B2 (Riboflavina)": 0.036, "Vitamina B3 (Niacina)": 0.376, "Vitamina B4 (Colina)": 10.2, "Vitamina B6": 0.078, "Vitamina B9 (Folato)": 16, "Vitamina B12": 0, "Omega-3": 0.012, "Omega-6": 0.065, "Omega-9": 0.053, "Colesterol": 0, "Cafeína": 0},
-  "6": {"Calorías": 654, "Proteínas": 15.23, "Carbohidratos": 13.71, "Fibra": 6.7, "Azúcares totales": 2.61, "Azúcares añadidos": 0, "Grasas totales": 65.21, "Grasas saturadas": 6.126, "Grasas trans": 0, "Calcio": 98, "Hierro": 2.91, "Magnesio": 158, "Fósforo": 346, "Potasio": 441, "Sodio": 2, "Zinc": 3.09, "Vitamina A": 1, "Vitamina C": 1.3, "Vitamina D": 0, "Vitamina E": 0.7, "Vitamina K": 2.7, "Vitamina B1 (Tiamina)": 0.341, "Vitamina B2 (Riboflavina)": 0.15, "Vitamina B3 (Niacina)": 1.125, "Vitamina B4 (Colina)": 39.2, "Vitamina B6": 0.537, "Vitamina B9 (Folato)": 98, "Vitamina B12": 0, "Omega-3": 9.08, "Omega-6": 38.09, "Omega-9": 8.79, "Colesterol": 0, "Cafeína": 0},
-  "7": {"Calorías": 40, "Proteínas": 1.1, "Carbohidratos": 9.34, "Fibra": 1.7, "Azúcares totales": 4.24, "Azúcares añadidos": 0, "Grasas totales": 0.1, "Grasas saturadas": 0.042, "Grasas trans": 0, "Calcio": 23, "Hierro": 0.21, "Magnesio": 10, "Fósforo": 29, "Potasio": 146, "Sodio": 4, "Zinc": 0.17, "Vitamina A": 0, "Vitamina C": 7.4, "Vitamina D": 0, "Vitamina E": 0.02, "Vitamina K": 0.4, "Vitamina B1 (Tiamina)": 0.046, "Vitamina B2 (Riboflavina)": 0.027, "Vitamina B3 (Niacina)": 0.116, "Vitamina B4 (Colina)": 6.1, "Vitamina B6": 0.12, "Vitamina B9 (Folato)": 19, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0.019, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "8": {"Calorías": 44, "Proteínas": 1.36, "Carbohidratos": 10.27, "Fibra": 1.4, "Azúcares totales": 4.73, "Azúcares añadidos": 0, "Grasas totales": 0.19, "Grasas saturadas": 0.046, "Grasas trans": 0, "Calcio": 20, "Hierro": 0.24, "Magnesio": 10, "Fósforo": 33, "Potasio": 157, "Sodio": 3, "Zinc": 0.17, "Vitamina A": 0, "Vitamina C": 4.7, "Vitamina D": 0, "Vitamina E": 0.02, "Vitamina K": 0.4, "Vitamina B1 (Tiamina)": 0.02, "Vitamina B2 (Riboflavina)": 0.02, "Vitamina B3 (Niacina)": 0.1, "Vitamina B4 (Colina)": 6.1, "Vitamina B6": 0.05, "Vitamina B9 (Folato)": 15, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0.08, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "9": {"Calorías": 86, "Proteínas": 1.5, "Carbohidratos": 8.7, "Fibra": 2.1, "Azúcares totales": 4.7, "Azúcares añadidos": 0, "Grasas totales": 5.3, "Grasas saturadas": 0.7, "Grasas trans": 0, "Calcio": 33, "Hierro": 0.4, "Magnesio": 13, "Fósforo": 40, "Potasio": 162, "Sodio": 8, "Zinc": 0.2, "Vitamina A": 1, "Vitamina C": 2.8, "Vitamina D": 0, "Vitamina E": 0.6, "Vitamina K": 2.2, "Vitamina B1 (Tiamina)": 0.05, "Vitamina B2 (Riboflavina)": 0.03, "Vitamina B3 (Niacina)": 0.1, "Vitamina B4 (Colina)": 6.3, "Vitamina B6": 0.13, "Vitamina B9 (Folato)": 10, "Vitamina B12": 0, "Omega-3": 0.01, "Omega-6": 0.6, "Omega-9": 3.6, "Colesterol": 0, "Cafeína": 0},
-  "10": {"Calorías": 139, "Proteínas": 8.86, "Carbohidratos": 27.42, "Fibra": 7.6, "Azúcares totales": 4.8, "Azúcares añadidos": 0, "Grasas totales": 2.59, "Grasas saturadas": 0.269, "Grasas trans": 0, "Calcio": 49, "Hierro": 2.89, "Magnesio": 48, "Fósforo": 168, "Potasio": 291, "Sodio": 7, "Zinc": 1.53, "Vitamina A": 1, "Vitamina C": 1.3, "Vitamina D": 0, "Vitamina E": 0.35, "Vitamina K": 4, "Vitamina B1 (Tiamina)": 0.116, "Vitamina B2 (Riboflavina)": 0.063, "Vitamina B3 (Niacina)": 0.526, "Vitamina B4 (Colina)": 42.9, "Vitamina B6": 0.139, "Vitamina B9 (Folato)": 172, "Vitamina B12": 0, "Omega-3": 0.041, "Omega-6": 1.155, "Omega-9": 0.702, "Colesterol": 0, "Cafeína": 0},
-  "11": {"Calorías": 114, "Proteínas": 8.4, "Carbohidratos": 21.2, "Fibra": 8, "Azúcares totales": 2.9, "Azúcares añadidos": 0, "Grasas totales": 1.1, "Grasas saturadas": 0.1, "Grasas trans": 0, "Calcio": 57, "Hierro": 2.7, "Magnesio": 79, "Fósforo": 252, "Potasio": 440, "Sodio": 11, "Zinc": 1.8, "Vitamina A": 4, "Vitamina C": 12.5, "Vitamina D": 0, "Vitamina E": 0.8, "Vitamina K": 30, "Vitamina B1 (Tiamina)": 0.2, "Vitamina B2 (Riboflavina)": 0.1, "Vitamina B3 (Niacina)": 1.2, "Vitamina B4 (Colina)": 61.2, "Vitamina B6": 0.2, "Vitamina B9 (Folato)": 155, "Vitamina B12": 0, "Omega-3": 0.03, "Omega-6": 0.44, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "12": {"Calorías": 20, "Proteínas": 1.14, "Carbohidratos": 4.41, "Fibra": 1.5, "Azúcares totales": 2.22, "Azúcares añadidos": 0, "Grasas totales": 0.4, "Grasas saturadas": 0.08, "Grasas trans": 0, "Calcio": 21, "Hierro": 0.5, "Magnesio": 22, "Fósforo": 50, "Potasio": 295, "Sodio": 3, "Zinc": 0.36, "Vitamina A": 13, "Vitamina C": 11.3, "Vitamina D": 0, "Vitamina E": 0.12, "Vitamina K": 4.8, "Vitamina B1 (Tiamina)": 0.039, "Vitamina B2 (Riboflavina)": 0.038, "Vitamina B3 (Niacina)": 0.49, "Vitamina B4 (Colina)": 9.5, "Vitamina B6": 0.08, "Vitamina B9 (Folato)": 20, "Vitamina B12": 0, "Omega-3": 0.062, "Omega-6": 0.076, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "13": {"Calorías": 20, "Proteínas": 1.14, "Carbohidratos": 4.41, "Fibra": 1.5, "Azúcares totales": 2.22, "Azúcares añadidos": 0, "Grasas totales": 0.4, "Grasas saturadas": 0.08, "Grasas trans": 0, "Calcio": 21, "Hierro": 0.5, "Magnesio": 22, "Fósforo": 50, "Potasio": 295, "Sodio": 3, "Zinc": 0.36, "Vitamina A": 13, "Vitamina C": 11.3, "Vitamina D": 0, "Vitamina E": 0.12, "Vitamina K": 4.8, "Vitamina B1 (Tiamina)": 0.039, "Vitamina B2 (Riboflavina)": 0.038, "Vitamina B3 (Niacina)": 0.49, "Vitamina B4 (Colina)": 9.5, "Vitamina B6": 0.08, "Vitamina B9 (Folato)": 20, "Vitamina B12": 0, "Omega-3": 0.062, "Omega-6": 0.076, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "14": {"Calorías": 16, "Proteínas": 1.21, "Carbohidratos": 3.11, "Fibra": 1, "Azúcares totales": 2.5, "Azúcares añadidos": 0, "Grasas totales": 0.32, "Grasas saturadas": 0.083, "Grasas trans": 0, "Calcio": 16, "Hierro": 0.37, "Magnesio": 18, "Fósforo": 38, "Potasio": 261, "Sodio": 8, "Zinc": 0.29, "Vitamina A": 10, "Vitamina C": 17.9, "Vitamina D": 0, "Vitamina E": 0.12, "Vitamina K": 4.3, "Vitamina B1 (Tiamina)": 0.045, "Vitamina B2 (Riboflavina)": 0.094, "Vitamina B3 (Niacina)": 0.451, "Vitamina B4 (Colina)": 9.5, "Vitamina B6": 0.163, "Vitamina B9 (Folato)": 24, "Vitamina B12": 0, "Omega-3": 0.062, "Omega-6": 0.076, "Omega-9": 0.038, "Colesterol": 0, "Cafeína": 0},
-  "15": {"Calorías": 86, "Proteínas": 1.57, "Carbohidratos": 20.12, "Fibra": 3, "Azúcares totales": 4.18, "Azúcares añadidos": 0, "Grasas totales": 0.05, "Grasas saturadas": 0.018, "Grasas trans": 0, "Calcio": 30, "Hierro": 0.61, "Magnesio": 25, "Fósforo": 47, "Potasio": 337, "Sodio": 55, "Zinc": 0.3, "Vitamina A": 4, "Vitamina C": 2.4, "Vitamina D": 0, "Vitamina E": 0.26, "Vitamina K": 1.8, "Vitamina B1 (Tiamina)": 0.078, "Vitamina B2 (Riboflavina)": 0.061, "Vitamina B3 (Niacina)": 0.557, "Vitamina B4 (Colina)": 12.3, "Vitamina B6": 0.209, "Vitamina B9 (Folato)": 11, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "16": {"Calorías": 94, "Proteínas": 1.6, "Carbohidratos": 22.5, "Fibra": 3.1, "Azúcares totales": 4.5, "Azúcares añadidos": 0, "Grasas totales": 0.1, "Grasas saturadas": 0.02, "Grasas trans": 0, "Calcio": 33, "Hierro": 0.65, "Magnesio": 27, "Fósforo": 50, "Potasio": 355, "Sodio": 60, "Zinc": 0.33, "Vitamina A": 4, "Vitamina C": 2.6, "Vitamina D": 0, "Vitamina E": 0.28, "Vitamina K": 2, "Vitamina B1 (Tiamina)": 0.08, "Vitamina B2 (Riboflavina)": 0.06, "Vitamina B3 (Niacina)": 0.6, "Vitamina B4 (Colina)": 12.5, "Vitamina B6": 0.22, "Vitamina B9 (Folato)": 12, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "17": {"Calorías": 76, "Proteínas": 1.37, "Carbohidratos": 17.7, "Fibra": 2.5, "Azúcares totales": 5.74, "Azúcares añadidos": 0, "Grasas totales": 0.14, "Grasas saturadas": 0.02, "Grasas trans": 0, "Calcio": 27, "Hierro": 0.69, "Magnesio": 18, "Fósforo": 32, "Potasio": 230, "Sodio": 27, "Zinc": 0.22, "Vitamina A": 787, "Vitamina C": 12.8, "Vitamina D": 0, "Vitamina E": 0.7, "Vitamina K": 2.1, "Vitamina B1 (Tiamina)": 0.057, "Vitamina B2 (Riboflavina)": 0.05, "Vitamina B3 (Niacina)": 0.53, "Vitamina B4 (Colina)": 11.2, "Vitamina B6": 0.165, "Vitamina B9 (Folato)": 6, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "18": {"Calorías": 90, "Proteínas": 2.01, "Carbohidratos": 20.71, "Fibra": 3.3, "Azúcares totales": 6.48, "Azúcares añadidos": 0, "Grasas totales": 0.15, "Grasas saturadas": 0.05, "Grasas trans": 0, "Calcio": 38, "Hierro": 0.69, "Magnesio": 27, "Fósforo": 54, "Potasio": 475, "Sodio": 36, "Zinc": 0.32, "Vitamina A": 961, "Vitamina C": 19.6, "Vitamina D": 0, "Vitamina E": 0.71, "Vitamina K": 2.3, "Vitamina B1 (Tiamina)": 0.107, "Vitamina B2 (Riboflavina)": 0.106, "Vitamina B3 (Niacina)": 1.487, "Vitamina B4 (Colina)": 13.1, "Vitamina B6": 0.286, "Vitamina B9 (Folato)": 14, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "20": {"Calorías": 120, "Proteínas": 4.4, "Carbohidratos": 21.3, "Fibra": 2.8, "Azúcares totales": 0.9, "Azúcares añadidos": 0, "Grasas totales": 1.9, "Grasas saturadas": 0.23, "Grasas trans": 0, "Calcio": 17, "Hierro": 1.5, "Magnesio": 64, "Fósforo": 152, "Potasio": 172, "Sodio": 7, "Zinc": 1.1, "Vitamina A": 1, "Vitamina C": 0, "Vitamina D": 0, "Vitamina E": 0.6, "Vitamina K": 0, "Vitamina B1 (Tiamina)": 0.107, "Vitamina B2 (Riboflavina)": 0.11, "Vitamina B3 (Niacina)": 0.41, "Vitamina B4 (Colina)": 23, "Vitamina B6": 0.123, "Vitamina B9 (Folato)": 42, "Vitamina B12": 0, "Omega-3": 0.085, "Omega-6": 0.97, "Omega-9": 0.49, "Colesterol": 0, "Cafeína": 0},
-  "21": {"Calorías": 17, "Proteínas": 1.23, "Carbohidratos": 3.29, "Fibra": 2.1, "Azúcares totales": 1.19, "Azúcares añadidos": 0, "Grasas totales": 0.3, "Grasas saturadas": 0.038, "Grasas trans": 0, "Calcio": 33, "Hierro": 0.97, "Magnesio": 14, "Fósforo": 30, "Potasio": 247, "Sodio": 8, "Zinc": 0.23, "Vitamina A": 436, "Vitamina C": 4, "Vitamina D": 0, "Vitamina E": 0.13, "Vitamina K": 102.5, "Vitamina B1 (Tiamina)": 0.072, "Vitamina B2 (Riboflavina)": 0.067, "Vitamina B3 (Niacina)": 0.313, "Vitamina B4 (Colina)": 9.3, "Vitamina B6": 0.074, "Vitamina B9 (Folato)": 136, "Vitamina B12": 0, "Omega-3": 0.048, "Omega-6": 0.05, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "22": {"Calorías": 160, "Proteínas": 2, "Carbohidratos": 8.53, "Fibra": 6.7, "Azúcares totales": 0.66, "Azúcares añadidos": 0, "Grasas totales": 14.66, "Grasas saturadas": 2.13, "Grasas trans": 0, "Calcio": 12, "Hierro": 0.55, "Magnesio": 29, "Fósforo": 52, "Potasio": 485, "Sodio": 7, "Zinc": 0.64, "Vitamina A": 7, "Vitamina C": 10, "Vitamina D": 0, "Vitamina E": 2.07, "Vitamina K": 21, "Vitamina B1 (Tiamina)": 0.067, "Vitamina B2 (Riboflavina)": 0.13, "Vitamina B3 (Niacina)": 1.738, "Vitamina B4 (Colina)": 14.2, "Vitamina B6": 0.257, "Vitamina B9 (Folato)": 81, "Vitamina B12": 0, "Omega-3": 0.111, "Omega-6": 1.68, "Omega-9": 9.8, "Colesterol": 0, "Cafeína": 0},
-  "23": {"Calorías": 87, "Proteínas": 1.87, "Carbohidratos": 20.13, "Fibra": 1.8, "Azúcares totales": 0.82, "Azúcares añadidos": 0, "Grasas totales": 0.1, "Grasas saturadas": 0.026, "Grasas trans": 0, "Calcio": 8, "Hierro": 0.52, "Magnesio": 22, "Fósforo": 54, "Potasio": 379, "Sodio": 5, "Zinc": 0.3, "Vitamina A": 0, "Vitamina C": 13.1, "Vitamina D": 0, "Vitamina E": 0.01, "Vitamina K": 2.1, "Vitamina B1 (Tiamina)": 0.081, "Vitamina B2 (Riboflavina)": 0.042, "Vitamina B3 (Niacina)": 1.32, "Vitamina B4 (Colina)": 13.5, "Vitamina B6": 0.27, "Vitamina B9 (Folato)": 10, "Vitamina B12": 0, "Omega-3": 0.01, "Omega-6": 0.036, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "24": {"Calorías": 93, "Proteínas": 2.5, "Carbohidratos": 21.15, "Fibra": 2.2, "Azúcares totales": 1.18, "Azúcares añadidos": 0, "Grasas totales": 0.13, "Grasas saturadas": 0.033, "Grasas trans": 0, "Calcio": 12, "Hierro": 0.78, "Magnesio": 28, "Fósforo": 70, "Potasio": 535, "Sodio": 6, "Zinc": 0.36, "Vitamina A": 1, "Vitamina C": 19.7, "Vitamina D": 0, "Vitamina E": 0.01, "Vitamina K": 1.9, "Vitamina B1 (Tiamina)": 0.08, "Vitamina B2 (Riboflavina)": 0.03, "Vitamina B3 (Niacina)": 1.55, "Vitamina B4 (Colina)": 14.8, "Vitamina B6": 0.3, "Vitamina B9 (Folato)": 28, "Vitamina B12": 0, "Omega-3": 0.012, "Omega-6": 0.043, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "25": {"Calorías": 35, "Proteínas": 0.76, "Carbohidratos": 8.22, "Fibra": 3, "Azúcares totales": 3.45, "Azúcares añadidos": 0, "Grasas totales": 0.18, "Grasas saturadas": 0.029, "Grasas trans": 0, "Calcio": 27, "Hierro": 0.38, "Magnesio": 11, "Fósforo": 30, "Potasio": 235, "Sodio": 240, "Zinc": 0.19, "Vitamina A": 852, "Vitamina C": 3.6, "Vitamina D": 0, "Vitamina E": 0.45, "Vitamina K": 14.4, "Vitamina B1 (Tiamina)": 0.017, "Vitamina B2 (Riboflavina)": 0.04, "Vitamina B3 (Niacina)": 0.64, "Vitamina B4 (Colina)": 8.9, "Vitamina B6": 0.15, "Vitamina B9 (Folato)": 7, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0.07, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "26": {"Calorías": 43, "Proteínas": 1.61, "Carbohidratos": 9.56, "Fibra": 2.8, "Azúcares totales": 6.76, "Azúcares añadidos": 0, "Grasas totales": 0.17, "Grasas saturadas": 0.027, "Grasas trans": 0, "Calcio": 16, "Hierro": 0.8, "Magnesio": 23, "Fósforo": 40, "Potasio": 325, "Sodio": 78, "Zinc": 0.35, "Vitamina A": 2, "Vitamina C": 4.9, "Vitamina D": 0, "Vitamina E": 0.04, "Vitamina K": 0.2, "Vitamina B1 (Tiamina)": 0.031, "Vitamina B2 (Riboflavina)": 0.04, "Vitamina B3 (Niacina)": 0.334, "Vitamina B4 (Colina)": 6, "Vitamina B6": 0.067, "Vitamina B9 (Folato)": 109, "Vitamina B12": 0, "Omega-3": 0.003, "Omega-6": 0.063, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "27": {"Calorías": 44, "Proteínas": 1.68, "Carbohidratos": 9.96, "Fibra": 2, "Azúcares totales": 7.96, "Azúcares añadidos": 0, "Grasas totales": 0.18, "Grasas saturadas": 0.028, "Grasas trans": 0, "Calcio": 16, "Hierro": 0.79, "Magnesio": 23, "Fósforo": 38, "Potasio": 305, "Sodio": 213, "Zinc": 0.35, "Vitamina A": 2, "Vitamina C": 3.6, "Vitamina D": 0, "Vitamina E": 0.04, "Vitamina K": 0.2, "Vitamina B1 (Tiamina)": 0.027, "Vitamina B2 (Riboflavina)": 0.04, "Vitamina B3 (Niacina)": 0.331, "Vitamina B4 (Colina)": 6.3, "Vitamina B6": 0.067, "Vitamina B9 (Folato)": 80, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "28": {"Calorías": 52, "Proteínas": 2.1, "Carbohidratos": 11.5, "Fibra": 3.4, "Azúcares totales": 8.1, "Azúcares añadidos": 0, "Grasas totales": 0.2, "Grasas saturadas": 0.03, "Grasas trans": 0, "Calcio": 18, "Hierro": 0.9, "Magnesio": 25, "Fósforo": 45, "Potasio": 350, "Sodio": 88, "Zinc": 0.4, "Vitamina A": 2, "Vitamina C": 4.5, "Vitamina D": 0, "Vitamina E": 0.1, "Vitamina K": 0.2, "Vitamina B1 (Tiamina)": 0.03, "Vitamina B2 (Riboflavina)": 0.05, "Vitamina B3 (Niacina)": 0.4, "Vitamina B4 (Colina)": 6.1, "Vitamina B6": 0.07, "Vitamina B9 (Folato)": 115, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "29": {"Calorías": 25, "Proteínas": 2.58, "Carbohidratos": 3.65, "Fibra": 1.6, "Azúcares totales": 2.05, "Azúcares añadidos": 0, "Grasas totales": 0.66, "Grasas saturadas": 0.086, "Grasas trans": 0, "Calcio": 160, "Hierro": 1.46, "Magnesio": 47, "Fósforo": 52, "Potasio": 369, "Sodio": 27, "Zinc": 0.47, "Vitamina A": 119, "Vitamina C": 15, "Vitamina D": 0, "Vitamina E": 0.43, "Vitamina K": 108.6, "Vitamina B1 (Tiamina)": 0.044, "Vitamina B2 (Riboflavina)": 0.086, "Vitamina B3 (Niacina)": 0.305, "Vitamina B4 (Colina)": 15.3, "Vitamina B6": 0.073, "Vitamina B9 (Folato)": 97, "Vitamina B12": 0, "Omega-3": 0.17, "Omega-6": 0.13, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "30": {"Calorías": 534, "Proteínas": 18.29, "Carbohidratos": 28.88, "Fibra": 27.3, "Azúcares totales": 1.55, "Azúcares añadidos": 0, "Grasas totales": 42.16, "Grasas saturadas": 3.66, "Grasas trans": 0, "Calcio": 255, "Hierro": 5.73, "Magnesio": 392, "Fósforo": 642, "Potasio": 813, "Sodio": 30, "Zinc": 4.34, "Vitamina A": 0, "Vitamina C": 0.6, "Vitamina D": 0, "Vitamina E": 0.31, "Vitamina K": 4.3, "Vitamina B1 (Tiamina)": 1.644, "Vitamina B2 (Riboflavina)": 0.161, "Vitamina B3 (Niacina)": 3.08, "Vitamina B4 (Colina)": 78.7, "Vitamina B6": 0.473, "Vitamina B9 (Folato)": 87, "Vitamina B12": 0, "Omega-3": 22.81, "Omega-6": 5.9, "Omega-9": 7.53, "Colesterol": 0, "Cafeína": 0},
-  "31": {"Calorías": 18, "Proteínas": 0.88, "Carbohidratos": 3.89, "Fibra": 1.2, "Azúcares totales": 2.63, "Azúcares añadidos": 0, "Grasas totales": 0.2, "Grasas saturadas": 0.028, "Grasas trans": 0, "Calcio": 10, "Hierro": 0.27, "Magnesio": 11, "Fósforo": 24, "Potasio": 237, "Sodio": 5, "Zinc": 0.17, "Vitamina A": 42, "Vitamina C": 13.7, "Vitamina D": 0, "Vitamina E": 0.54, "Vitamina K": 7.9, "Vitamina B1 (Tiamina)": 0.037, "Vitamina B2 (Riboflavina)": 0.019, "Vitamina B3 (Niacina)": 0.594, "Vitamina B4 (Colina)": 6.7, "Vitamina B6": 0.08, "Vitamina B9 (Folato)": 15, "Vitamina B12": 0, "Omega-3": 0.003, "Omega-6": 0.089, "Omega-9": 0.04, "Colesterol": 0, "Cafeína": 0},
-  "32": {"Calorías": 41, "Proteínas": 0.93, "Carbohidratos": 9.58, "Fibra": 2.8, "Azúcares totales": 4.74, "Azúcares añadidos": 0, "Grasas totales": 0.24, "Grasas saturadas": 0.037, "Grasas trans": 0, "Calcio": 33, "Hierro": 0.3, "Magnesio": 12, "Fósforo": 35, "Potasio": 320, "Sodio": 69, "Zinc": 0.24, "Vitamina A": 835, "Vitamina C": 5.9, "Vitamina D": 0, "Vitamina E": 0.66, "Vitamina K": 13.2, "Vitamina B1 (Tiamina)": 0.066, "Vitamina B2 (Riboflavina)": 0.058, "Vitamina B3 (Niacina)": 0.983, "Vitamina B4 (Colina)": 8.8, "Vitamina B6": 0.138, "Vitamina B9 (Folato)": 19, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0.1, "Omega-9": 0.012, "Colesterol": 0, "Cafeína": 0},
-  "33": {"Calorías": 41, "Proteínas": 0.93, "Carbohidratos": 9.58, "Fibra": 2.8, "Azúcares totales": 4.74, "Azúcares añadidos": 0, "Grasas totales": 0.24, "Grasas saturadas": 0.037, "Grasas trans": 0, "Calcio": 33, "Hierro": 0.3, "Magnesio": 12, "Fósforo": 35, "Potasio": 320, "Sodio": 69, "Zinc": 0.24, "Vitamina A": 835, "Vitamina C": 5.9, "Vitamina D": 0, "Vitamina E": 0.66, "Vitamina K": 13.2, "Vitamina B1 (Tiamina)": 0.066, "Vitamina B2 (Riboflavina)": 0.058, "Vitamina B3 (Niacina)": 0.983, "Vitamina B4 (Colina)": 8.8, "Vitamina B6": 0.138, "Vitamina B9 (Folato)": 19, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0.1, "Omega-9": 0.012, "Colesterol": 0, "Cafeína": 0},
-  "41": {"Calorías": 327, "Proteínas": 51.46, "Carbohidratos": 33.92, "Fibra": 17.5, "Azúcares totales": 0, "Azúcares añadidos": 0, "Grasas totales": 0.52, "Grasas saturadas": 0.076, "Grasas trans": 0, "Calcio": 241, "Hierro": 9.24, "Magnesio": 247, "Fósforo": 674, "Potasio": 2384, "Sodio": 4, "Zinc": 2.13, "Vitamina A": 0, "Vitamina C": 0, "Vitamina D": 0, "Vitamina E": 0, "Vitamina K": 37, "Vitamina B1 (Tiamina)": 1.05, "Vitamina B2 (Riboflavina)": 0.23, "Vitamina B3 (Niacina)": 2.5, "Vitamina B4 (Colina)": 196.2, "Vitamina B6": 0.56, "Vitamina B9 (Folato)": 370, "Vitamina B12": 0, "Omega-3": 0.17, "Omega-6": 1.8, "Omega-9": 0.5, "Colesterol": 0, "Cafeína": 0},
-  "42": {"Calorías": 120, "Proteínas": 1.96, "Carbohidratos": 8.64, "Fibra": 5.3, "Azúcares totales": 0.3, "Azúcares añadidos": 0, "Grasas totales": 9.92, "Grasas saturadas": 2.49, "Grasas trans": 0, "Calcio": 13, "Hierro": 0.61, "Magnesio": 39, "Fósforo": 54, "Potasio": 690, "Sodio": 22, "Zinc": 0.68, "Vitamina A": 7, "Vitamina C": 17.1, "Vitamina D": 0, "Vitamina E": 2.66, "Vitamina K": 21.6, "Vitamina B1 (Tiamina)": 0.081, "Vitamina B2 (Riboflavina)": 0.162, "Vitamina B3 (Niacina)": 2.112, "Vitamina B4 (Colina)": 14.5, "Vitamina B6": 0.316, "Vitamina B9 (Folato)": 90, "Vitamina B12": 0, "Omega-3": 0.12, "Omega-6": 1.2, "Omega-9": 6.1, "Colesterol": 0, "Cafeína": 0},
-  "43": {"Calorías": 408, "Proteínas": 20.8, "Carbohidratos": 64.2, "Fibra": 16.2, "Azúcares totales": 11.2, "Azúcares añadidos": 0, "Grasas totales": 7.18, "Grasas saturadas": 0.77, "Grasas trans": 0, "Calcio": 102, "Hierro": 4.31, "Magnesio": 110, "Fósforo": 332, "Potasio": 816, "Sodio": 26, "Zinc": 3, "Vitamina A": 5, "Vitamina C": 4.1, "Vitamina D": 0, "Vitamina E": 0.8, "Vitamina K": 9.1, "Vitamina B1 (Tiamina)": 0.21, "Vitamina B2 (Riboflavina)": 0.12, "Vitamina B3 (Niacina)": 1.3, "Vitamina B4 (Colina)": 82.3, "Vitamina B6": 0.4, "Vitamina B9 (Folato)": 360, "Vitamina B12": 0, "Omega-3": 0.1, "Omega-6": 3.1, "Omega-9": 1.9, "Colesterol": 0, "Cafeína": 0},
-  "44": {"Calorías": 143, "Proteínas": 9.5, "Carbohidratos": 26.22, "Fibra": 7, "Azúcares totales": 0.3, "Azúcares añadidos": 0, "Grasas totales": 0.54, "Grasas saturadas": 0.07, "Grasas trans": 0, "Calcio": 63, "Hierro": 3.71, "Magnesio": 70, "Fósforo": 201, "Potasio": 561, "Sodio": 1, "Zinc": 0.99, "Vitamina A": 0, "Vitamina C": 0.9, "Vitamina D": 0, "Vitamina E": 0.02, "Vitamina K": 3.9, "Vitamina B1 (Tiamina)": 0.176, "Vitamina B2 (Riboflavina)": 0.06, "Vitamina B3 (Niacina)": 0.5, "Vitamina B4 (Colina)": 45.1, "Vitamina B6": 0.225, "Vitamina B9 (Folato)": 177, "Vitamina B12": 0, "Omega-3": 0.155, "Omega-6": 0.122, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "45": {"Calorías": 132, "Proteínas": 8.86, "Carbohidratos": 23.71, "Fibra": 8.7, "Azúcares totales": 0.3, "Azúcares añadidos": 0, "Grasas totales": 0.54, "Grasas saturadas": 0.14, "Grasas trans": 0, "Calcio": 27, "Hierro": 2.1, "Magnesio": 70, "Fósforo": 140, "Potasio": 354, "Sodio": 1, "Zinc": 0.96, "Vitamina A": 0, "Vitamina C": 0, "Vitamina D": 0, "Vitamina E": 0, "Vitamina K": 2.8, "Vitamina B1 (Tiamina)": 0.171, "Vitamina B2 (Riboflavina)": 0.06, "Vitamina B3 (Niacina)": 0.5, "Vitamina B4 (Colina)": 36.5, "Vitamina B6": 0.1, "Vitamina B9 (Folato)": 149, "Vitamina B12": 0, "Omega-3": 0.11, "Omega-6": 0.13, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "46": {"Calorías": 127, "Proteínas": 8.67, "Carbohidratos": 22.8, "Fibra": 6.4, "Azúcares totales": 0.3, "Azúcares añadidos": 0, "Grasas totales": 0.5, "Grasas saturadas": 0.066, "Grasas trans": 0, "Calcio": 35, "Hierro": 2.22, "Magnesio": 45, "Fósforo": 142, "Potasio": 405, "Sodio": 1, "Zinc": 0.99, "Vitamina A": 0, "Vitamina C": 0.3, "Vitamina D": 0, "Vitamina E": 0.01, "Vitamina K": 3.6, "Vitamina B1 (Tiamina)": 0.155, "Vitamina B2 (Riboflavina)": 0.057, "Vitamina B3 (Niacina)": 0.579, "Vitamina B4 (Colina)": 36, "Vitamina B6": 0.12, "Vitamina B9 (Folato)": 130, "Vitamina B12": 0, "Omega-3": 0.14, "Omega-6": 0.12, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "47": {"Calorías": 143, "Proteínas": 9.01, "Carbohidratos": 26.22, "Fibra": 9, "Azúcares totales": 0.29, "Azúcares añadidos": 0, "Grasas totales": 0.65, "Grasas saturadas": 0.093, "Grasas trans": 0, "Calcio": 51, "Hierro": 2.09, "Magnesio": 50, "Fósforo": 176, "Potasio": 436, "Sodio": 1, "Zinc": 0.82, "Vitamina A": 0, "Vitamina C": 0.5, "Vitamina D": 0, "Vitamina E": 0, "Vitamina K": 2.1, "Vitamina B1 (Tiamina)": 0.193, "Vitamina B2 (Riboflavina)": 0.061, "Vitamina B3 (Niacina)": 0.245, "Vitamina B4 (Colina)": 57, "Vitamina B6": 0.222, "Vitamina B9 (Folato)": 177, "Vitamina B12": 0, "Omega-3": 0.13, "Omega-6": 0.16, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "48": {"Calorías": 47, "Proteínas": 0.94, "Carbohidratos": 11.75, "Fibra": 2.4, "Azúcares totales": 9.35, "Azúcares añadidos": 0, "Grasas totales": 0.12, "Grasas saturadas": 0.015, "Grasas trans": 0, "Calcio": 40, "Hierro": 0.10, "Magnesio": 10, "Fósforo": 14, "Potasio": 181, "Sodio": 0, "Zinc": 0.07, "Vitamina A": 11, "Vitamina C": 53.2, "Vitamina D": 0, "Vitamina E": 0.18, "Vitamina K": 0, "Vitamina B1 (Tiamina)": 0.087, "Vitamina B2 (Riboflavina)": 0.040, "Vitamina B3 (Niacina)": 0.282, "Vitamina B4 (Colina)": 8.4, "Vitamina B6": 0.060, "Vitamina B9 (Folato)": 30, "Vitamina B12": 0, "Omega-3": 0.007, "Omega-6": 0.018, "Omega-9": 0.023, "Colesterol": 0, "Cafeína": 0},
-  "49": {"Calorías": 116, "Proteínas": 9.02, "Carbohidratos": 20.13, "Fibra": 7.9, "Azúcares totales": 0.18, "Azúcares añadidos": 0, "Grasas totales": 0.38, "Grasas saturadas": 0.051, "Grasas trans": 0, "Calcio": 19, "Hierro": 3.33, "Magnesio": 36, "Fósforo": 180, "Potasio": 369, "Sodio": 2, "Zinc": 1.27, "Vitamina A": 0, "Vitamina C": 1.5, "Vitamina D": 0, "Vitamina E": 0.11, "Vitamina K": 1.7, "Vitamina B1 (Tiamina)": 0.169, "Vitamina B2 (Riboflavina)": 0.073, "Vitamina B3 (Niacina)": 1.06, "Vitamina B4 (Colina)": 24.3, "Vitamina B6": 0.178, "Vitamina B9 (Folato)": 181, "Vitamina B12": 0, "Omega-3": 0.05, "Omega-6": 0.12, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "50": {"Calorías": 108, "Proteínas": 7.58, "Carbohidratos": 19.14, "Fibra": 4.2, "Azúcares totales": 0.2, "Azúcares añadidos": 0, "Grasas totales": 0.53, "Grasas saturadas": 0.07, "Grasas trans": 0, "Calcio": 20, "Hierro": 2.13, "Magnesio": 30, "Fósforo": 130, "Potasio": 274, "Sodio": 169, "Zinc": 1, "Vitamina A": 0, "Vitamina C": 0.8, "Vitamina D": 0, "Vitamina E": 0.1, "Vitamina K": 1.2, "Vitamina B1 (Tiamina)": 0.11, "Vitamina B2 (Riboflavina)": 0.06, "Vitamina B3 (Niacina)": 0.7, "Vitamina B4 (Colina)": 20.1, "Vitamina B6": 0.14, "Vitamina B9 (Folato)": 101, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "51": {"Calorías": 127, "Proteínas": 8.84, "Carbohidratos": 22.1, "Fibra": 10.7, "Azúcares totales": 0.2, "Azúcares añadidos": 0, "Grasas totales": 0.53, "Grasas saturadas": 0.07, "Grasas trans": 0, "Calcio": 24, "Hierro": 3.52, "Magnesio": 43, "Fósforo": 214, "Potasio": 451, "Sodio": 284, "Zinc": 1.34, "Vitamina A": 2, "Vitamina C": 1.8, "Vitamina D": 0, "Vitamina E": 0.1, "Vitamina K": 2, "Vitamina B1 (Tiamina)": 0.17, "Vitamina B2 (Riboflavina)": 0.08, "Vitamina B3 (Niacina)": 1.1, "Vitamina B4 (Colina)": 25.1, "Vitamina B6": 0.19, "Vitamina B9 (Folato)": 188, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "52": {"Calorías": 52, "Proteínas": 0.26, "Carbohidratos": 13.81, "Fibra": 2.4, "Azúcares totales": 10.39, "Azúcares añadidos": 0, "Grasas totales": 0.17, "Grasas saturadas": 0.028, "Grasas trans": 0, "Calcio": 6, "Hierro": 0.12, "Magnesio": 5, "Fósforo": 11, "Potasio": 107, "Sodio": 1, "Zinc": 0.04, "Vitamina A": 3, "Vitamina C": 4.6, "Vitamina D": 0, "Vitamina E": 0.18, "Vitamina K": 2.2, "Vitamina B1 (Tiamina)": 0.017, "Vitamina B2 (Riboflavina)": 0.026, "Vitamina B3 (Niacina)": 0.091, "Vitamina B4 (Colina)": 3.4, "Vitamina B6": 0.041, "Vitamina B9 (Folato)": 3, "Vitamina B12": 0, "Omega-3": 0.009, "Omega-6": 0.043, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  
-};
-
 // --- DATA END ---
 
 const supplements = [
@@ -691,11 +574,45 @@ async function renderMobileSearchResults(filter) {
     // Buscar localmente primero
     const filterLower = filter.toLowerCase();
     let foodsToRender = [...state.foods];
-    const filteredFoods = foodsToRender.filter(f => 
-        (f.groupName || f.name).toLowerCase().includes(filterLower)
+const filteredFoods = foodsToRender.filter(f => {
+    const groupNameMatch = (f.groupName || f.name).toLowerCase().includes(filterLower);
+
+    // si hay variants, buscamos también ahí
+    const variantMatch = f.variants?.some(v => 
+        v.name.toLowerCase().includes(filterLower) || 
+        v.fullName?.toLowerCase().includes(filterLower)
     );
+
+    return groupNameMatch || variantMatch;
+});
+
     
-    let allResults = [...filteredFoods];
+    let allResults = [];
+
+// Revisar cada grupo
+foodsToRender.forEach(f => {
+    const groupNameMatch = (f.groupName || f.name).toLowerCase().includes(filterLower);
+
+    // Si matchea el grupo, lo agregamos como está
+    if (groupNameMatch) {
+        allResults.push(f);
+    }
+
+    // Si matchean las variantes, las agregamos como resultados individuales
+    f.variants?.forEach(v => {
+        if (
+            v.name.toLowerCase().includes(filterLower) || 
+            v.fullName?.toLowerCase().includes(filterLower)
+        ) {
+            allResults.push({
+                ...v,
+                emoji: f.emoji,   // heredamos emoji del grupo
+                parent: f.groupName
+            });
+        }
+    });
+});
+
     
     // Buscar online si hay pocos resultados
     if (filter && filteredFoods.length < 3 && window.buscarAlimentoEnDB) {
@@ -848,9 +765,7 @@ if (!state.b12DailyTask && userCode) {
     });
 }
 	
-	
-	
-	
+
     // Add B12 daily task if not completed
     if (!state.b12DailyTask && userCode) {
         const taskCard = document.createElement('div');
@@ -873,8 +788,23 @@ if (!state.b12DailyTask && userCode) {
         foodsToRender.sort((a, b) => (a.groupName || a.name).localeCompare(b.groupName || b.name));
     }
     
-    const filteredFoods = foodsToRender.filter(f => (f.groupName || f.name).toLowerCase().includes(filterLower));
-    filteredFoods.forEach(f => {
+   const filteredFoods = foodsToRender.filter(f => {
+    const groupNameMatch = (f.groupName || f.name).toLowerCase().includes(filterLower);
+
+    // si hay variants, buscamos también ahí
+    const variantMatch = f.variants?.some(v => 
+        v.name.toLowerCase().includes(filterLower) || 
+        v.fullName?.toLowerCase().includes(filterLower)
+    );
+
+    return groupNameMatch || variantMatch;
+});
+
+filteredFoods.forEach(f => {
+    const groupNameMatch = (f.groupName || f.name).toLowerCase().includes(filterLower);
+
+    // Mostrar el grupo si coincide o si no hay filtro (exploración general)
+    if (!filter || groupNameMatch) {
         const card = document.createElement('div');
         card.className = 'card btn';
         const name = f.groupName || f.name;
@@ -883,7 +813,27 @@ if (!state.b12DailyTask && userCode) {
         card.innerHTML = `<div class="emoji">${f.emoji}</div><div>${name}${calText}</div>`;
         card.addEventListener('click', () => handleFoodClick(f));
         grid.appendChild(card);
-    });
+    }
+
+    // Solo expandir variantes cuando HAY búsqueda
+    if (filter) {
+        f.variants?.forEach(v => {
+            if (
+                v.name.toLowerCase().includes(filterLower) || 
+                v.fullName?.toLowerCase().includes(filterLower)
+            ) {
+                const card = document.createElement('div');
+                card.className = 'card btn';
+                const calories = nutrientsData[v.id]?.Calorías;
+                const calText = calories ? `<div class="sub">(${calories.toFixed(0)} kcal/100g)</div>` : '';
+                card.innerHTML = `<div class="emoji">${f.emoji}</div><div>${v.fullName || v.name}${calText}</div>`;
+                card.addEventListener('click', () => handleFoodClick(v));
+                grid.appendChild(card);
+            }
+        });
+    }
+});
+
     
    // Buscar en Supabase si hay filtro y pocos resultados locales
 if (filter && filteredFoods.length < 3 && window.buscarAlimentoEnDB) {
