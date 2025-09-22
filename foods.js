@@ -100,7 +100,7 @@ const groupedFoods = [
     {"id": 74, "name": "Perejil", "fullName": "Perejil"},
     {"id": 78, "name": "Zapallito", "fullName": "Zapallito (Zucchini)"}
   ]},
-  {"groupName": "Morrones", "emoji": "🌶", "variants": [
+  {"groupName": "Morrones", "emoji": "🌶️", "variants": [
     {"id": 70, "name": "Rojo", "fullName": "Morrón rojo"},
     {"id": 71, "name": "Verde", "fullName": "Morrón verde"},
     {"id": 72, "name": "Amarillo", "fullName": "Morrón amarillo"}
