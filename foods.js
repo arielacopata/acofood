@@ -33,11 +33,7 @@ const groupedFoods = [
   ]},
   {"id": 5, "name": "Mandarina", "fullName": "Mandarina", "emoji": "🍊"},
   {"id": 4, "name": "Maní", "fullName": "Maní", "emoji": "🥜"},
-  
-  {"groupName": "Manzana", "emoji": "🍎", "variants": [
-  {"id": 52, "name": "Manzana Roja", "fullName": "Manzana Roja", "emoji": "🍎"},
-  {"id": 69, "name": "Manzana Verde", "fullName": "Manzana Verde"}
-  ]},
+  {"id": 52, "name": "Manzana", "fullName": "Manzana", "emoji": "🍎"},
   {"id": 6, "name": "Nueces", "fullName": "Nueces", "emoji": "🌰"},
   {"groupName": "Palta", "emoji": "🥑", "variants": [
     {"id": 22, "name": "Hass", "fullName": "Palta (Hass)"},
@@ -77,9 +73,10 @@ const groupedFoods = [
     {"id": 59, "name": "Sésamo", "fullName": "Semillas de sésamo"},
     {"id": 60, "name": "Girasol", "fullName": "Semillas de girasol"}
   ]},
-  {"groupName": "Frutas", "emoji": "🍓", "variants": [
+  {"groupName": "Frutas", "emoji": "🍎", "variants": [
     {"id": 91, "name": "Dátiles", "fullName": "Dátiles (Medjool)"},
     {"id": 61, "name": "Limón", "fullName": "Limón"},
+    {"id": 69, "name": "Manzana Verde", "fullName": "Manzana Verde"},
     {"id": 73, "name": "Pera", "fullName": "Pera"},
     {"id": 79, "name": "Arándanos", "fullName": "Arándanos"},
     {"id": 80, "name": "Frutilla", "fullName": "Frutilla"},
@@ -100,7 +97,7 @@ const groupedFoods = [
     {"id": 74, "name": "Perejil", "fullName": "Perejil"},
     {"id": 78, "name": "Zapallito", "fullName": "Zapallito (Zucchini)"}
   ]},
-  {"groupName": "Morrones", "emoji": "🌶�?, "variants": [
+  {"groupName": "Morrones", "emoji": "🫑", "variants": [
     {"id": 70, "name": "Rojo", "fullName": "Morrón rojo"},
     {"id": 71, "name": "Verde", "fullName": "Morrón verde"},
     {"id": 72, "name": "Amarillo", "fullName": "Morrón amarillo"}
@@ -117,11 +114,8 @@ const groupedFoods = [
     {"id": 56, "name": "Orégano", "fullName": "Orégano (seco)"},
     {"id": 57, "name": "Jengibre", "fullName": "Jengibre (raíz)"}
   ]},
-  {"groupName": "Aceitunas", "emoji": "🟢", "variants": [
-    {"id": 65, "name": "Aceitunas Negras", "fullName": "Aceitunas Negras"},
-    {"id": 93, "name": "Aceitunas Verdes", "fullName": "Aceite Verdes"}
-  ]},
-  {"groupName": "Aceites", "emoji": "💧", "variants": [
+  {"groupName": "Aceites y Grasas", "emoji": "🫒", "variants": [
+    {"id": 65, "name": "Aceitunas", "fullName": "Aceitunas Negras"},
     {"id": 85, "name": "de Oliva", "fullName": "Aceite de Oliva"},
     {"id": 86, "name": "de Coco", "fullName": "Aceite de Coco"}
   ]},
@@ -214,6 +208,5 @@ const nutrientsData = {
   "89": {"Calorías": 579, "Proteínas": 21.15, "Carbohidratos": 21.55, "Fibra": 12.5, "Azúcares totales": 4.35, "Azúcares añadidos": 0, "Grasas totales": 49.93, "Grasas saturadas": 3.802, "Grasas trans": 0, "Calcio": 269, "Hierro": 3.71, "Magnesio": 270, "Fósforo": 481, "Potasio": 733, "Sodio": 1, "Zinc": 3.12, "Vitamina A": 0, "Vitamina C": 0, "Vitamina D": 0, "Vitamina E": 25.63, "Vitamina K": 0, "Vitamina B1 (Tiamina)": 0.205, "Vitamina B2 (Riboflavina)": 1.138, "Vitamina B3 (Niacina)": 3.618, "Vitamina B4 (Colina)": 52.1, "Vitamina B6": 0.137, "Vitamina B9 (Folato)": 44, "Vitamina B12": 0, "Omega-3": 0.006, "Omega-6": 12.18, "Omega-9": 31.55, "Colesterol": 0, "Cafeína": 0},
   "90": {"Calorías": 628, "Proteínas": 14.95, "Carbohidratos": 16.7, "Fibra": 9.7, "Azúcares totales": 4.34, "Azúcares añadidos": 0, "Grasas totales": 60.75, "Grasas saturadas": 4.464, "Grasas trans": 0, "Calcio": 114, "Hierro": 4.7, "Magnesio": 163, "Fósforo": 290, "Potasio": 680, "Sodio": 0, "Zinc": 2.45, "Vitamina A": 1, "Vitamina C": 6.3, "Vitamina D": 0, "Vitamina E": 15.03, "Vitamina K": 14.2, "Vitamina B1 (Tiamina)": 0.643, "Vitamina B2 (Riboflavina)": 0.113, "Vitamina B3 (Niacina)": 1.8, "Vitamina B4 (Colina)": 45.6, "Vitamina B6": 0.563, "Vitamina B9 (Folato)": 113, "Vitamina B12": 0, "Omega-3": 0.088, "Omega-6": 7.89, "Omega-9": 45.66, "Colesterol": 0, "Cafeína": 0},
   "91": {"Calorías": 282, "Proteínas": 2.45, "Carbohidratos": 75.03, "Fibra": 8, "Azúcares totales": 63.35, "Azúcares añadidos": 0, "Grasas totales": 0.39, "Grasas saturadas": 0.04, "Grasas trans": 0, "Calcio": 39, "Hierro": 1.02, "Magnesio": 43, "Fósforo": 62, "Potasio": 656, "Sodio": 2, "Zinc": 0.29, "Vitamina A": 0, "Vitamina C": 0.4, "Vitamina D": 0, "Vitamina E": 0.05, "Vitamina K": 2.7, "Vitamina B1 (Tiamina)": 0.052, "Vitamina B2 (Riboflavina)": 0.066, "Vitamina B3 (Niacina)": 1.274, "Vitamina B4 (Colina)": 6.3, "Vitamina B6": 0.165, "Vitamina B9 (Folato)": 19, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "92": {"Calorías": 247, "Proteínas": 3.99, "Carbohidratos": 80.59, "Fibra": 53.1, "Azúcares totales": 2.17, "Azúcares añadidos": 0, "Grasas totales": 1.24, "Grasas saturadas": 0.345, "Grasas trans": 0, "Calcio": 1002, "Hierro": 8.32, "Magnesio": 60, "Fósforo": 64, "Potasio": 431, "Sodio": 10, "Zinc": 1.83, "Vitamina A": 15, "Vitamina C": 3.8, "Vitamina D": 0, "Vitamina E": 2.32, "Vitamina K": 31.2, "Vitamina B1 (Tiamina)": 0.022, "Vitamina B2 (Riboflavina)": 0.041, "Vitamina B3 (Niacina)": 1.332, "Vitamina B4 (Colina)": 11.1, "Vitamina B6": 0.158, "Vitamina B9 (Folato)": 6, "Vitamina B12": 0, "Omega-3": 0.03, "Omega-6": 0.08, "Omega-9": 0.25, "Colesterol": 0, "Cafeína": 0},
-  "93": {"Calorías": 145, "Proteínas": 1.03, "Carbohidratos": 3.84, "Fibra": 3.3, "Azúcares totales": 0, "Azúcares añadidos": 0, "Grasas totales": 15.32, "Grasas saturadas": 2.029, "Grasas trans": 0, "Calcio": 52, "Hierro": 0.49, "Magnesio": 11, "Fósforo": 4, "Potasio": 42, "Sodio": 1556, "Zinc": 0.04, "Vitamina A": 20, "Vitamina C": 0, "Vitamina D": 0, "Vitamina E": 3.81, "Vitamina K": 1.4, "Vitamina B1 (Tiamina)": 0.021, "Vitamina B2 (Riboflavina)": 0.007, "Vitamina B3 (Niacina)": 0.237, "Vitamina B4 (Colina)": 14.2, "Vitamina B6": 0.031, "Vitamina B9 (Folato)": 3, "Vitamina B12": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 11.41, "Colesterol": 0, "Cafeína": 0}
+  "92": {"Calorías": 247, "Proteínas": 3.99, "Carbohidratos": 80.59, "Fibra": 53.1, "Azúcares totales": 2.17, "Azúcares añadidos": 0, "Grasas totales": 1.24, "Grasas saturadas": 0.345, "Grasas trans": 0, "Calcio": 1002, "Hierro": 8.32, "Magnesio": 60, "Fósforo": 64, "Potasio": 431, "Sodio": 10, "Zinc": 1.83, "Vitamina A": 15, "Vitamina C": 3.8, "Vitamina D": 0, "Vitamina E": 2.32, "Vitamina K": 31.2, "Vitamina B1 (Tiamina)": 0.022, "Vitamina B2 (Riboflavina)": 0.041, "Vitamina B3 (Niacina)": 1.332, "Vitamina B4 (Colina)": 11.1, "Vitamina B6": 0.158, "Vitamina B9 (Folato)": 6, "Vitamina B12": 0, "Omega-3": 0.03, "Omega-6": 0.08, "Omega-9": 0.25, "Colesterol": 0, "Cafeína": 0}
 };
