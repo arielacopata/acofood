@@ -480,12 +480,6 @@ body.searching-mobile .search-results-mobile {
 
 /* ===== MEDIA QUERIES Y COMPORTAMIENTO ===== */
 
-@media (min-width: 769px) {
-    body, .container {
-        padding-bottom: 80px; /* Altura del cuadro de búsqueda + margen */
-    }
-}
-
 @media (max-width: 768px) {
     /* Mostrar versión mobile en pantallas pequeñas */
     .search-results-mobile {
@@ -507,7 +501,6 @@ body.searching-mobile .search-results-mobile {
         background: rgba(0,0,0,0.6) !important;
     }
 }
-
 
 /* ===== SCROLLBAR PERSONALIZADO ===== */
 
@@ -952,22 +945,6 @@ body.searching-mobile .search-results-mobile {
     text-transform: uppercase !important; /* SIEMPRE EN MAYÚSCULAS */
 }
 
-
-/* Para todos los tamaños */
-.supplements-section,
-.suplementos-section,
-#suplementos {
-    margin-top: 120px; /* Base para desktop */
-}
-
-/* Tu media query móvil existente que puede sobreescribir */
-@media (max-width: 768px) {
-    /* Lo que ya tienes + ajustes si necesitas */
-}
-
-
-
-
 /* Asegurar buen contraste en ambos temas */
 :root {
     --text-secondary: #666;
@@ -977,3 +954,93 @@ body.searching-mobile .search-results-mobile {
     --text-secondary: #aaa;
 }
 
+/* Agregar al style.css o dentro de un <style> tag en tasks.html */
+
+.task-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    margin: 0;
+}
+
+.task-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border);
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--good);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+/* Mejorar el layout de cada item */
+.task-settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.task-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.task-emoji {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+}
+.iconbtn {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--fg);
+    border-radius: 10px;
+    padding: 6px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.iconbtn:hover {
+    background: var(--accent);
+    color: var(--accent-fg);
+    transform: translateY(-1px);
+}
+
+.iconbtn:active {
+    transform: translateY(0px);
+}

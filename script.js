@@ -351,19 +351,6 @@ function saveState() {
 
 
 
-	// Configuración Supabase
-	const SUPABASE_URL = 'https://odqjwkdpqdwgkwztvzoi.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kcWp3a2RwcWR3Z2t3enR2em9pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMzkxMjksImV4cCI6MjA3MzkxNTEyOX0.Qp2QHG4ozfzEndhkXlYbUtpHDR_7plMZEAKCnMJbB_Q';
-    
-	// Configuración Supabase (con timing fix)
-	let supabase = null;
-	// Variables de estado de usuario
-	let userCode = null;
-
-window.addEventListener('load', function() {
-	supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-});
-
 function createMobileSearchElements() {
     // Crear backdrop
     const backdrop = document.createElement('div');
@@ -844,6 +831,26 @@ async function renderFoods(filter = '') {
     if(state.layout === 'B') grid.classList.add('layoutB');
     grid.innerHTML = '';
     
+	
+	// En la sección de B12 de renderFoods()
+console.log('=== B12 DEBUG ===');
+console.log('userCode:', userCode);
+console.log('state.b12DailyTask:', state.b12DailyTask);
+console.log('localStorage B12:', localStorage.getItem('acofood_b12Daily_' + todayKey));
+
+if (!state.b12DailyTask && userCode) {
+    console.log('Debería mostrar B12');
+    // crear botón B12
+} else {
+    console.log('NO mostrar B12 porque:', {
+        b12DailyTask: state.b12DailyTask,
+        userCode: userCode
+    });
+}
+	
+	
+	
+	
     // Add B12 daily task if not completed
     if (!state.b12DailyTask && userCode) {
         const taskCard = document.createElement('div');

@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>AcoFood · Proto v3.0 (OnlineDB)</title>
@@ -17,8 +18,12 @@
   <!-- Settings Menu -->
   <div id="settings-backdrop"></div>
   <div id="settings-menu">
-      <div class="title" style="margin-bottom: 24px;">Configuración</div>
-      
+   
+    <div class="settings-item">
+        <div class="chip" id="userProfileBtn" style="width:100%;">
+            👤 Perfil de Usuario
+        </div>
+    </div>
       <div class="settings-item">
           <div class="sub" style="margin-bottom: 8px;">Ordenar alimentos por</div>
           <div class="segmented" id="sort-order-segmented">
@@ -110,16 +115,25 @@
       <div class="settings-item" style="border-top: 1px solid var(--border); padding-top: 16px; margin-top:24px;">
         <button class="chip" id="resetAppBtn" style="width:100%; background-color: var(--bad); color: white;">Borrar Datos de la App</button>
       </div>
+			<div class="title" style="margin-bottom: 24px;">Configuración</div>
+        <div class="settings-item">
+        <a href="balance.v2.1.html" class="chip" style="width:100%; text-decoration: none;">
+            ❓ Información Nutricional
+        </a>
+    </div>
+  
   </div>
 
   <div class="container">
     <div class="topbar">
       <div class="topbar-left">
         <button class="iconbtn" id="menuBtn">☰</button>
+		<a href="tasks.html" class="iconbtn" title="Mis tareas">📝</a>
       </div>
       <div>
         <div class="title" id="appTitle">AcoFood</div>
         <div class="sub" id="today"></div>
+		
       </div>
   <div class="topbar-right">
     <div id="auth-section">

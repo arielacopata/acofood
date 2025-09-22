@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcoFood - Tareas</title>
+    <link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="shared.js"></script>  <!-- Solo conexión -->
+<script src="tasks.js"></script>   <!-- Solo funciones API -->
+<script>
+    const VITAMINA_B12_TASK_ID = 7;
+    
+    window.addEventListener('load', function() {
+        // Esperar a que shared.js inicialice supabase
+        setTimeout(init, 100);
+    });
+	
+	async function init() {
+    try {
+        await renderTasks();
+        setupEventListeners();
+    } catch (error) {
+        console.error('Error inicializando tareas:', error);
+    }
+}
+
+function setupEventListeners() {
+    // Settings menu
+    const settingsMenu = document.getElementById('settings-menu');
+    const settingsBackdrop = document.getElementById('settings-backdrop');
+    
+    document.getElementById('settingsBtn').onclick = () => {
+        console.log('Settings button clicked');
+        settingsMenu.style.left = '0';
+        settingsBackdrop.style.display = 'block';
+        
+        if (window.taskUI) {
+            window.taskUI.renderTaskSettings();
+        }
+    };
+    
+    settingsBackdrop.onclick = () => {
+        settingsMenu.style.left = '-300px';
+        settingsBackdrop.style.display = 'none';
+    };
+
+    // Task modal backdrop
+    document.getElementById('task-backdrop').onclick = (e) => {
+        if (e.target === e.currentTarget) {
+            closeTaskModal();
+        }
+    };
+}
+
+// resto de funciones (renderTasks, openTaskModal, etc.)
+    
+    // resto de tu código específico para tasks...
+</script>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+<div class="topbar">
+    <div class="topbar-left">
+        <a href="index.html" class="iconbtn">← Volver</a>
+    </div>
+    <div class="title">Mis Tareas</div>
+    <div class="topbar-right">
+        <a href="balance.v2.html" class="iconbtn" title="Información nutricional">❓</a>
+        <div class="iconbtn" id="settingsBtn">⚙️</div>
+    </div>
+</div>
+
+        <!-- Tareas Habilitadas -->
+        <div id="tasks-container" class="grid">
+            <!-- Las tareas se generarán dinámicamente aquí -->
+        </div>
+
+        <!-- Mensaje cuando no hay tareas -->
+        <div id="no-tasks-message" style="display: none; text-align: center; padding: 40px; color: var(--muted);">
+            <div style="font-size: 48px; margin-bottom: 16px;">📝</div>
+            <h3>No tienes tareas habilitadas</h3>
+            <p>Ve a configuración para habilitar las tareas que quieres realizar.</p>
+            <button class="chip" onclick="openTaskSettings()" style="margin-top: 16px;">Configurar Tareas</button>
+        </div>
+    </div>
+
+    <!-- Modal para completar tareas -->
+    <div id="task-backdrop" class="modal-backdrop" style="display: none;">
+        <div class="modal">
+            <h3 id="task-modal-title">Completar Tarea</h3>
+            <div id="task-modal-content">
+                <!-- Contenido dinámico según el tipo de tarea -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Menu -->
+    <div id="settings-backdrop" style="position:fixed; inset:0; background: rgba(0,0,0,.35); display:none; z-index: 20;"></div>
+    <div id="settings-menu" style="position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: var(--card); z-index: 30; transition: left 0.3s ease-in-out; padding: 16px; box-shadow: 4px 0 15px rgba(0,0,0,.1); overflow-y: auto; box-sizing: border-box;">
+        <div class="title" style="margin-bottom: 24px;">Configuración de Tareas</div>
+        
+        <details class="settings-group">
+            <summary>Tareas Disponibles</summary>
+            <div id="task-settings-container">
+                <p style="color: var(--muted); font-size: 12px; margin-bottom: 12px;">
+                    Habilita las tareas que quieres realizar diariamente
+                </p>
+                <!-- Las tareas se generarán dinámicamente aquí -->
+            </div>
+        </details>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+             
+
+
+        function setupEventListeners() {
+            // Settings menu
+            const settingsMenu = document.getElementById('settings-menu');
+            const settingsBackdrop = document.getElementById('settings-backdrop');
+            
+            document.getElementById('settingsBtn').onclick = () => {
+                settingsMenu.classList.add('open');
+                settingsMenu.style.left = '0';
+                settingsBackdrop.style.display = 'block';
+                
+                if (window.taskUI) {
+                    window.taskUI.renderTaskSettings();
+                }
+            };
+            
+            settingsBackdrop.onclick = () => {
+                settingsMenu.style.left = '-300px';
+                settingsBackdrop.style.display = 'none';
+				renderTasks();
+            };
+
+            // Task modal backdrop
+            document.getElementById('task-backdrop').onclick = (e) => {
+                if (e.target === e.currentTarget) {
+                    closeTaskModal();
+                }
+            };
+        }
+
+        async function renderTasks() {
+            const container = document.getElementById('tasks-container');
+            const noTasksMessage = document.getElementById('no-tasks-message');
+            container.innerHTML = '';
+            if (!window.taskAPI) {
+                console.error('taskAPI no disponible');
+                return;
+            }
+
+            try {
+                const enabledTasks = await window.taskAPI.getUserTasks(userCode);
+                
+                if (enabledTasks.length === 0) {
+                    container.style.display = 'none';
+                    noTasksMessage.style.display = 'block';
+                    return;
+                }
+
+                container.style.display = 'grid';
+                noTasksMessage.style.display = 'none';
+                container.innerHTML = '';
+
+                for (const userTask of enabledTasks) {
+                    const taskType = userTask.task_types;
+                    const isCompleted = await window.taskAPI.isTaskCompletedToday(userCode, taskType.id);
+                    
+                    if (!isCompleted) {
+                        const taskCard = document.createElement('div');
+                        taskCard.className = 'card btn';
+                        taskCard.innerHTML = `
+                            <div class="emoji">${taskType.emoji}</div>
+                            <div>
+                                <div>${taskType.name}</div>
+                                <div class="sub">Pendiente</div>
+                            </div>
+                        `;
+                        
+                        taskCard.addEventListener('click', () => openTaskModal(taskType));
+                        container.appendChild(taskCard);
+                    }
+                }
+
+                // Si todas las tareas están completadas
+                if (container.children.length === 0) {
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--muted);">
+                            <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+                            <h3>¡Todas las tareas completadas!</h3>
+                            <p>Excelente trabajo. Las tareas se renovarán mañana.</p>
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                console.error('Error renderizando tareas:', error);
+                container.innerHTML = '<p style="color: var(--bad);">Error cargando tareas</p>';
+            }
+        }
+
+        function openTaskModal(taskType) {
+            const backdrop = document.getElementById('task-backdrop');
+            const title = document.getElementById('task-modal-title');
+            const content = document.getElementById('task-modal-content');
+
+            title.textContent = taskType.name;
+            backdrop.style.display = 'flex';
+
+            // Generar contenido específico según el tipo de tarea
+            if (taskType.id === VITAMINA_B12_TASK_ID) {
+                // Modal específico para B12 (reutilizar lógica existente)
+                content.innerHTML = generateB12Content();
+            } else if (taskType.name === 'Ejercicio General') {
+                content.innerHTML = generateExerciseContent();
+            } else if (taskType.name === 'Meditar') {
+                content.innerHTML = generateMeditationContent();
+            } else if (taskType.name === 'Respirar') {
+                content.innerHTML = generateBreathingContent();
+            } else if (taskType.name === 'Ducha fría') {
+                content.innerHTML = generateColdShowerContent();
+            } else if (taskType.name === 'Agradecer') {
+                content.innerHTML = generateGratitudeContent();
+            } else {
+                // Tarea custom o genérica
+                content.innerHTML = generateGenericTaskContent(taskType);
+            }
+        }
+
+        function generateB12Content() {
+            return `
+                <div class="section-title">Selecciona la dosis</div>
+                <div class="row-buttons">
+                    <div class="chip" onclick="completeTask(${VITAMINA_B12_TASK_ID}, '500 mcg')">500 mcg</div>
+                    <div class="chip" onclick="completeTask(${VITAMINA_B12_TASK_ID}, '1000 mcg')">1000 mcg</div>
+                    <div class="chip" onclick="completeTask(${VITAMINA_B12_TASK_ID}, '2500 mcg')">2500 mcg</div>
+                    <div class="chip" onclick="completeTask(${VITAMINA_B12_TASK_ID}, 'Otra dosis')">Otra dosis</div>
+                </div>
+            `;
+        }
+
+        function generateExerciseContent() {
+            return `
+                <div class="section-title">Tipo de ejercicio</div>
+                <div class="row-buttons">
+                    <div class="chip" onclick="completeExerciseTask('HIIT')">💪 HIIT</div>
+                    <div class="chip" onclick="completeExerciseTask('Correr')">🏃‍♂️ Correr</div>
+                    <div class="chip" onclick="completeExerciseTask('Gimnasio')">🏋️‍♂️ Gimnasio</div>
+                    <div class="chip" onclick="completeExerciseTask('Caminar')">🚶‍♂️ Caminar</div>
+                    <div class="chip" onclick="completeExerciseTask('Bicicleta')">🚴‍♂️ Bicicleta</div>
+                    <div class="chip" onclick="completeExerciseTask('Ejercicio General')">🏃‍♂️ General</div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <label>¿Registrar calorías gastadas?</label>
+                    <input type="number" id="exercise-calories" placeholder="kcal (opcional)" style="margin-top: 8px;">
+                </div>
+            `;
+        }
+
+        function generateMeditationContent() {
+            return `
+                <div class="section-title">Duración</div>
+                <div class="row-buttons">
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), '5 minutos')">5 min</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), '10 minutos')">10 min</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), '15 minutos')">15 min</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), '20 minutos')">20 min</div>
+                </div>
+            `;
+        }
+
+        function generateBreathingContent() {
+            return `
+                <div class="section-title">Técnica de respiración</div>
+                <div class="row-buttons">
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), 'Respiración 4-7-8')">4-7-8</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), 'Respiración cuadrada')">Cuadrada</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), 'Respiración profunda')">Profunda</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), 'Wim Hof')">Wim Hof</div>
+                </div>
+            `;
+        }
+
+        function generateColdShowerContent() {
+            return `
+                <div class="section-title">Duración</div>
+                <div class="row-buttons">
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), '30 segundos')">30 seg</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), '1 minuto')">1 min</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), '2 minutos')">2 min</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), '5 minutos')">5 min</div>
+                </div>
+            `;
+        }
+
+        function generateGratitudeContent() {
+            return `
+                <div class="section-title">¿Cómo practicaste la gratitud?</div>
+                <div class="row-buttons">
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), '3 cosas por las que estoy agradecido')">Lista de 3</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), 'Journaling de gratitud')">Journaling</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), 'Meditación de gratitud')">Meditación</div>
+                    <div class="chip" onclick="completeTask(getCurrentTaskId(), 'Expresé gratitud a alguien')">A alguien</div>
+                </div>
+            `;
+        }
+
+function generateGenericTaskContent(taskType) {
+    if (taskType.name === 'Custom Task') {
+        return `
+            <div class="section-title">¿Qué tarea realizaste?</div>
+            <div style="margin: 20px 0;">
+                <input type="text" id="custom-task-input" 
+                       placeholder="Ej: Leer 30 minutos, Yoga, etc." 
+                       style="width: 100%; margin-bottom: 16px;">
+                <button class="chip" onclick="completeCustomTask(${taskType.id})" 
+                        style="background: var(--good); color: white; padding: 12px 24px;">
+                    ✓ Completar Tarea
+                </button>
+            </div>
+        `;
+    }
+    
+    // Para otras tareas genéricas
+    return `
+        <div class="section-title">¿Completaste esta tarea?</div>
+        <div style="text-align: center; margin: 20px 0;">
+            <div style="font-size: 48px; margin-bottom: 16px;">${taskType.emoji}</div>
+            <button class="chip" onclick="completeTask(${taskType.id}, 'Completada')" 
+                    style="background: var(--good); color: white; padding: 12px 24px;">
+                ✓ Marcar como completada
+            </button>
+        </div>
+    `;
+}
+
+
+
+async function completeCustomTask(taskId) {
+    const customInput = document.getElementById('custom-task-input');
+    const details = customInput.value.trim();
+    
+    if (!details) {
+        showToast('Por favor describe qué tarea realizaste');
+        return;
+    }
+    
+    await completeTask(taskId, details);
+}
+        function closeTaskModal() {
+            document.getElementById('task-backdrop').style.display = 'none';
+        }
+
+        function getCurrentTaskId() {
+            // Obtener el ID de la tarea actual desde el contexto del modal
+            const title = document.getElementById('task-modal-title').textContent;
+            // Esta función necesitaría mejorar para obtener el ID real
+            // Por ahora, retorna un placeholder
+            return 1;
+        }
+
+        async function completeTask(taskId, details) {
+            try {
+                await window.taskAPI.completeTask(userCode, taskId);
+                console.log(`Tarea ${taskId} completada: ${details}`);
+                
+                closeTaskModal();
+                await renderTasks(); // Re-renderizar para ocultar la tarea completada
+                
+                // Mostrar confirmación
+                showToast('¡Tarea completada!');
+                
+            } catch (error) {
+                console.error('Error completando tarea:', error);
+                showToast('Error al completar la tarea');
+            }
+        }
+
+        async function completeExerciseTask(exerciseType) {
+            const calories = document.getElementById('exercise-calories').value;
+            const details = calories ? `${exerciseType} (${calories} kcal)` : exerciseType;
+            
+            // Buscar el ID de "Ejercicio General"
+            try {
+                const allTasks = await window.taskAPI.getAllTaskTypes();
+                const exerciseTask = allTasks.find(t => t.name === 'Ejercicio General');
+                
+                if (exerciseTask) {
+                    await completeTask(exerciseTask.id, details);
+                }
+            } catch (error) {
+                console.error('Error completando ejercicio:', error);
+            }
+        }
+
+        function openTaskSettings() {
+            document.getElementById('settingsBtn').click();
+        }
+
+        function showToast(message) {
+            // Implementar sistema de notificaciones simple
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--good);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 1000;
+                font-weight: 600;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
