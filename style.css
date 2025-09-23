@@ -1,4 +1,4 @@
-    :root{
+﻿    :root{
       --bg:#f7f7f8; --fg:#111; --muted:#6b7280; --card:#ffffff;
       --accent:#ffcc00; --accent-fg:#111; --border:#e5e7eb; --good:#10b981; --bad:#ef4444;
       --progress-protein: #3b82f6; --progress-carbs: #f97316; --progress-fat: #eab308;
@@ -912,6 +912,19 @@ body.searching-mobile .search-results-mobile {
         text-transform: uppercase !important;
         font-size: 30px !important;
         font-weight: 600 !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .container {
+        padding-bottom: 120px; /* En lugar de padding-bottom */
+    }
+    
+    /* O específicamente para suplementos si prefieres */
+    .supplements-section,
+    .suplementos-section,
+    #suplementos {
+        padding-top: 20px;
     }
 }
 
