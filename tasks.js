@@ -51,18 +51,20 @@ updateUserTask: async function(userCode, taskTypeId, isEnabled, customName = nul
         return data;
     },
 
-    isTaskCompletedToday: async function(userCode, taskTypeId) {
-        const today = new Date().toISOString().split('T')[0];
-        const { data, error } = await supabase
-            .from('task_completions')
-            .select('id')
-            .eq('user_code', userCode)
-            .eq('task_type_id', taskTypeId)
-            .eq('date', today)
-            .limit(1);
-        if (error) throw error;
-        return data.length > 0;
-    }
+isTaskCompletedToday: async function(userCode, taskTypeId) {
+    const today = new Date().toISOString().split('T')[0];
+    
+    const { data, error } = await supabase
+        .from('task_completions')
+        .select('id')
+        .eq('user_code', userCode)
+        .eq('task_type_id', taskTypeId)
+        .eq('date', today)
+        .limit(1);
+    
+    if (error) throw error;
+    return data.length > 0;
+}
 };
 
 // ===== UI FUNCTIONS =====

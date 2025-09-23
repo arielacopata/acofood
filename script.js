@@ -102,18 +102,21 @@ input.addEventListener('keydown', (e) => {
 // Login con código
 async function loginWithCode(code) {
     try {
-        // PRIMERO verificar si es admin
-        const { data: adminData, error: adminError } = await supabase
-            .from('admin_users')
-            .select('admin_code, name')
-            .eq('admin_code', code)
-            .single();
-        
-        if (adminData && !adminError) {
-            // Es admin - mostrar panel
-            showAdminPanel();
-            showToast(`Acceso admin: ${adminData.name}`);
-            return;
+        // PRIMERO verificar si es admin - USANDO BYPASS
+        try {
+            const adminData = await window.directSupabaseQuery('admin_users', {
+                select: 'admin_code,name',
+                admin_code: `eq.${code}`
+            });
+            
+            if (adminData && adminData.length > 0) {
+                // Es admin - mostrar panel
+                showAdminPanel();
+                showToast(`Acceso admin: ${adminData[0].name}`);
+                return;
+            }
+        } catch (adminError) {
+            console.log('Admin check failed (expected for normal users):', adminError);
         }
         
         // NO es admin - proceder como usuario normal
@@ -220,33 +223,41 @@ async function loadUserData() {
     if (!userCode || !supabase) return;
     
     try {
-        // Cargar perfil del usuario
-        const { data: profile } = await supabase
-            .from('user_data')
-            .select('*')
-            .eq('user_code', userCode)
-            .eq('data_type', 'profile')
-            .single();
-        
-        if (profile) {
-            state.profile = profile.data.profile || {};
-            state.goals = profile.data.goals || { carbs: 65, protein: 20, fat: 15 };
+        // Cargar perfil del usuario - USANDO BYPASS
+        try {
+            const profileData = await window.directSupabaseQuery('user_data', {
+                select: '*',
+                user_code: `eq.${userCode}`,
+                data_type: 'eq.profile'
+            });
+            
+            if (profileData && profileData.length > 0) {
+                const profile = profileData[0];
+                state.profile = profile.data.profile || {};
+                state.goals = profile.data.goals || { carbs: 65, protein: 20, fat: 15 };
+            }
+        } catch (profileError) {
+            console.log('Profile load failed:', profileError);
         }
         
-        // Cargar historial del día actual
-        const { data: history } = await supabase
-            .from('user_data')
-            .select('*')
-            .eq('user_code', userCode)
-            .eq('data_type', 'daily')
-            .eq('date', todayKey)
-            .single();
-        
-        if (history) {
-            state.history = history.data.history || [];
-            dailyTotals = history.data.totals || {};
-            state.b12Taken = history.data.b12Taken || false;
-            state.b12DailyTask = history.data.b12DailyTask || false;
+        // Cargar historial del día actual - USANDO BYPASS
+        try {
+            const historyData = await window.directSupabaseQuery('user_data', {
+                select: '*',
+                user_code: `eq.${userCode}`,
+                data_type: 'eq.daily',
+                date: `eq.${todayKey}`
+            });
+            
+            if (historyData && historyData.length > 0) {
+                const history = historyData[0];
+                state.history = history.data.history || [];
+                dailyTotals = history.data.totals || {};
+                state.b12Taken = history.data.b12Taken || false;
+                state.b12DailyTask = history.data.b12DailyTask || false;
+            }
+        } catch (historyError) {
+            console.log('History load failed:', historyError);
         }
         
         populateProfileForm();

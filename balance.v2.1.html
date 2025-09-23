@@ -23,36 +23,66 @@
             height: 45vh;
             max-height: 450px;
         }
-        .bg-custom-gray { background-color: #F8F9FA; }
-        .text-animal { color: #E53E3E; }
-        .text-plant { color: #38A169; }
-        .border-animal { border-color: #E53E3E; }
-        .border-plant { border-color: #38A169; }
+        
+        /* Temas claros y oscuros */
+        :root {
+            --bg-custom-gray: #F8F9FA;
+            --text-animal: #E53E3E;
+            --text-plant: #38A169;
+            --border-animal: #E53E3E;
+            --border-plant: #38A169;
+            --card-bg: #ffffff;
+            --text-primary: #1A202C;
+            --text-secondary: #4A5568;
+        }
+        
+        :root.dark {
+            --bg-custom-gray: #0F1419;
+            --card-bg: #1A202C;
+            --text-primary: #F7FAFC;
+            --text-secondary: #A0AEC0;
+        }
+        
+        .bg-custom-gray { background-color: var(--bg-custom-gray); }
+        .text-animal { color: var(--text-animal); }
+        .text-plant { color: var(--text-plant); }
+        .border-animal { border-color: var(--border-animal); }
+        .border-plant { border-color: var(--border-plant); }
+        
+        /* Aplicar variables CSS a elementos existentes */
+        body { 
+            background-color: var(--bg-custom-gray) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        .card-bg { background-color: var(--card-bg); }
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
     </style>
 </head>
-<body class="bg-custom-gray text-gray-800">
+<body class="bg-custom-gray">
     <div class="container mx-auto p-4 md:p-8">
 
         <!-- Título Principal -->
-<div style="position: absolute; top: 20px; left: 20px;">
-<header class="text-center mb-12 relative">
-    <div style="position: absolute; top: 0; left: 20px;">
-        <a href="index.html" class="inline-block bg-white rounded-full px-4 py-2 shadow-lg hover:shadow-xl transition-shadow">
-            ← Volver
-        </a>
-    </div>
-    
-    <!-- El título queda naturalmente centrado -->
-    <h1 class="text-4xl md:text-5xl font-black text-gray-900 px-20">Proteínas: La Realidad y La Solución</h1>
-    <p class="text-xl md:text-2xl mt-2 text-gray-600">Por qué AcoFood se enfoca 100% en alimentos de origen vegetal.</p>
-</header>
+        <div style="position: absolute; top: 20px; left: 20px;">
+        <header class="text-center mb-12 relative">
+            <div style="position: absolute; top: 0; left: 20px;">
+                <a href="index.html" class="inline-block card-bg rounded-full px-4 py-2 shadow-lg hover:shadow-xl transition-shadow text-primary">
+                    ← Volver
+                </a>
+            </div>
+            
+            <!-- El título queda naturalmente centrado -->
+            <h1 class="text-4xl md:text-5xl font-black text-primary px-20">Proteínas: La Realidad y La Solución</h1>
+            <p class="text-xl md:text-2xl mt-2 text-secondary">Por qué AcoFood se enfoca 100% en alimentos de origen vegetal.</p>
+        </header>
 
         <main class="space-y-12">
             
             <!-- SECCIÓN 1: La Realidad (Gráfico Comparativo) -->
-            <section id="la-realidad" class="bg-white rounded-xl shadow-lg p-6 md:p-10">
-                <h2 class="text-3xl font-bold text-center mb-2">La Cruda Realidad del "Paquete" Nutricional</h2>
-                <p class="text-center max-w-3xl mx-auto mb-8 text-gray-600">Al comparar el "paquete" completo, la proteína animal presenta un perfil de alto riesgo. El área roja sobrante en el gráfico representa el costo oculto para tu salud: inflamación, grasas dañinas y falta de fibra protectora.</p>
+            <section id="la-realidad" class="card-bg rounded-xl shadow-lg p-6 md:p-10">
+                <h2 class="text-3xl font-bold text-center mb-2 text-primary">La Cruda Realidad del "Paquete" Nutricional</h2>
+                <p class="text-center max-w-3xl mx-auto mb-8 text-secondary">Al comparar el "paquete" completo, la proteína animal presenta un perfil de alto riesgo. El área roja sobrante en el gráfico representa el costo oculto para tu salud: inflamación, grasas dañinas y falta de fibra protectora.</p>
                 <div class="chart-container">
                     <canvas id="chartRealidad"></canvas>
                 </div>
@@ -60,43 +90,43 @@
             
             <!-- SECCIÓN 2: El Muro (Tarjetas de Riesgo) -->
             <section id="el-muro">
-                 <h2 class="text-3xl font-bold text-center mb-10">El "Muro": Un Análisis Detallado de los Riesgos</h2>
+                 <h2 class="text-3xl font-bold text-center mb-10 text-primary">El "Muro": Un Análisis Detallado de los Riesgos</h2>
                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
                         <div class="text-5xl mb-4">🩺</div>
                         <h3 class="text-xl font-bold mb-3 text-animal">Riesgo Cardiovascular</h3>
-                        <p class="text-gray-600">Las grasas saturadas y el colesterol elevan el riesgo de aterosclerosis. Además, los **AGEs** generados al cocinarla, endurecen las arterias y aumentan la presión arterial.</p>
+                        <p class="text-secondary">Las grasas saturadas y el colesterol elevan el riesgo de aterosclerosis. Además, los **AGEs** generados al cocinarla, endurecen las arterias y aumentan la presión arterial.</p>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
                         <div class="text-5xl mb-4">☢️</div>
                         <h3 class="text-xl font-bold mb-3 text-animal">Potencial Carcinogénico</h3>
-                        <p class="text-gray-600">La digestión genera **nitrosaminas** y eleva la hormona **IGF-1**, ambos factores vinculados directamente con un mayor riesgo de desarrollar varios tipos de cáncer.</p>
+                        <p class="text-secondary">La digestión genera **nitrosaminas** y eleva la hormona **IGF-1**, ambos factores vinculados directamente con un mayor riesgo de desarrollar varios tipos de cáncer.</p>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
                         <div class="text-5xl mb-4">🩸</div>
                         <h3 class="text-xl font-bold mb-3 text-animal">Resistencia a la Insulina</h3>
-                        <p class="text-gray-600">La grasa saturada y la inflamación crónica interfieren con la función de la insulina. Los **AGEs** agravan esta condición, siendo un factor clave en la Diabetes Tipo 2.</p>
+                        <p class="text-secondary">La grasa saturada y la inflamación crónica interfieren con la función de la insulina. Los **AGEs** agravan esta condición, siendo un factor clave en la Diabetes Tipo 2.</p>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
                         <div class="text-5xl mb-4">🔥</div>
                         <h3 class="text-xl font-bold mb-3 text-animal">Inflamación Crónica</h3>
-                        <p class="text-gray-600">Contiene compuestos pro-inflamatorios como el ácido araquidónico. Los **AGEs** añaden estrés oxidativo, creando un estado de inflamación de bajo grado constante.</p>
+                        <p class="text-secondary">Contiene compuestos pro-inflamatorios como el ácido araquidónico. Los **AGEs** añaden estrés oxidativo, creando un estado de inflamación de bajo grado constante.</p>
                     </div>
                     
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
                         <div class="text-5xl mb-4">🔬</div>
                         <h3 class="text-xl font-bold mb-3 text-animal">Sobrecarga Orgánica</h3>
-                        <p class="text-gray-600">La alta carga de proteína y compuestos nitrogenados fuerzan a <strong><em>riñones y páncreas</em></strong> a un sobreesfuerzo constante, elevando el riesgo de fallo renal y pancreatitis.</p>
+                        <p class="text-secondary">La alta carga de proteína y compuestos nitrogenados fuerzan a <strong><em>riñones y páncreas</em></strong> a un sobreesfuerzo constante, elevando el riesgo de fallo renal y pancreatitis.</p>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-animal text-center">
                         <div class="text-5xl mb-4">👁️</div>
                         <h3 class="text-xl font-bold mb-3 text-animal">Deterioro de la Visión</h3>
-                        <p class="text-gray-600">Los **AGEs** dañan los delicados vasos sanguíneos de la retina, siendo un agente principal en el desarrollo de cataratas y retinopatía diabética.</p>
+                        <p class="text-secondary">Los **AGEs** dañan los delicados vasos sanguíneos de la retina, siendo un agente principal en el desarrollo de cataratas y retinopatía diabética.</p>
                     </div>
 
                  </div>
@@ -104,14 +134,14 @@
             
             <!-- Transición -->
             <section class="text-center py-10">
-                <h2 class="text-4xl font-black text-gray-900 tracking-tight">YA VIMOS LAS DESVENTAJAS,</h2>
+                <h2 class="text-4xl font-black text-primary tracking-tight">YA VIMOS LAS DESVENTAJAS,</h2>
                 <h2 class="text-4xl font-black text-plant">AHORA HABLEMOS DE LAS VENTAJAS.</h2>
             </section>
 
             <!-- SECCIÓN 3: La Solución (Gráfico de Beneficios) -->
-            <section id="la-solucion" class="bg-white rounded-xl shadow-lg p-6 md:p-10">
-                <h2 class="text-3xl font-bold text-center mb-2">La Solución: El Arsenal Protector de las Plantas</h2>
-                <p class="text-center max-w-3xl mx-auto mb-8 text-gray-600">Al elegir alimentos vegetales, no solo evitas los riesgos anteriores, sino que obtienes un conjunto de beneficios exclusivos que la proteína animal simplemente no puede ofrecer.</p>
+            <section id="la-solucion" class="card-bg rounded-xl shadow-lg p-6 md:p-10">
+                <h2 class="text-3xl font-bold text-center mb-2 text-primary">La Solución: El Arsenal Protector de las Plantas</h2>
+                <p class="text-center max-w-3xl mx-auto mb-8 text-secondary">Al elegir alimentos vegetales, no solo evitas los riesgos anteriores, sino que obtienes un conjunto de beneficios exclusivos que la proteína animal simplemente no puede ofrecer.</p>
                 <div class="chart-container">
                     <canvas id="chartSolucion"></canvas>
                 </div>
@@ -119,43 +149,43 @@
 
             <!-- SECCIÓN 4: Beneficios en Tarjetas -->
             <section id="los-beneficios">
-                 <h2 class="text-3xl font-bold text-center mb-10">Beneficios Clave en tu Día a Día</h2>
+                 <h2 class="text-3xl font-bold text-center mb-10 text-primary">Beneficios Clave en tu Día a Día</h2>
                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
                         <div class="text-5xl mb-4">⚡</div>
                         <h3 class="text-xl font-bold mb-3 text-plant">Recuperación Acelerada</h3>
-                        <p class="text-gray-600">La reducción drástica de la inflamación y la mejora del flujo sanguíneo permiten que el oxígeno y los nutrientes lleguen más rápido a los tejidos, acelerando la reparación muscular y reduciendo el dolor post-ejercicio.</p>
+                        <p class="text-secondary">La reducción drástica de la inflamación y la mejora del flujo sanguíneo permiten que el oxígeno y los nutrientes lleguen más rápido a los tejidos, acelerando la reparación muscular y reduciendo el dolor post-ejercicio.</p>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
                         <div class="text-5xl mb-4">❤️</div>
                         <h3 class="text-xl font-bold mb-3 text-plant">Flujo Sanguíneo Optimizado</h3>
-                        <p class="text-gray-600">Al evitar las grasas saturadas que "espesan" la sangre, se mejora la función endotelial. Tus vasos sanguíneos se vuelven más flexibles, mejorando la circulación, la presión arterial y la salud cardiovascular general.</p>
+                        <p class="text-secondary">Al evitar las grasas saturadas que "espesan" la sangre, se mejora la función endotelial. Tus vasos sanguíneos se vuelven más flexibles, mejorando la circulación, la presión arterial y la salud cardiovascular general.</p>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
                         <div class="text-5xl mb-4">🔋</div>
                         <h3 class="text-xl font-bold mb-3 text-plant">Energía Neta Superior</h3>
-                        <p class="text-gray-600">La digestión de alimentos vegetales es mucho más eficiente, consumiendo menos energía. Esto, sumado a la energía sostenida de los carbohidratos complejos, resulta en mayores niveles de energía disponible durante todo el día.</p>
+                        <p class="text-secondary">La digestión de alimentos vegetales es mucho más eficiente, consumiendo menos energía. Esto, sumado a la energía sostenida de los carbohidratos complejos, resulta en mayores niveles de energía disponible durante todo el día.</p>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
                         <div class="text-5xl mb-4">🛡️</div>
                         <h3 class="text-xl font-bold mb-3 text-plant">Defensa Antioxidante</h3>
-                        <p class="text-gray-600">Las plantas están cargadas de antioxidantes que neutralizan los radicales libres, protegiendo tus células del daño, retrasando el envejecimiento prematuro y reduciendo el riesgo de enfermedades crónicas.</p>
+                        <p class="text-secondary">Las plantas están cargadas de antioxidantes que neutralizan los radicales libres, protegiendo tus células del daño, retrasando el envejecimiento prematuro y reduciendo el riesgo de enfermedades crónicas.</p>
                     </div>
                     
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
                         <div class="text-5xl mb-4">🧠</div>
                         <h3 class="text-xl font-bold mb-3 text-plant">Claridad Mental</h3>
-                        <p class="text-gray-600">Una mejor circulación y menor inflamación también benefician al cerebro. Muchos reportan una reducción de la "niebla mental", mayor enfoque y una sensación general de bienestar cognitivo.</p>
+                        <p class="text-secondary">Una mejor circulación y menor inflamación también benefician al cerebro. Muchos reportan una reducción de la "niebla mental", mayor enfoque y una sensación general de bienestar cognitivo.</p>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
+                    <div class="card-bg rounded-xl shadow-lg p-6 border-t-4 border-plant text-center">
                         <div class="text-5xl mb-4">🦠</div>
                         <h3 class="text-xl font-bold mb-3 text-plant">Salud Intestinal Robusta</h3>
-                        <p class="text-gray-600">La fibra y los prebióticos de las plantas alimentan a tu microbioma intestinal, fortaleciendo tu sistema inmune, mejorando la absorción de nutrientes y contribuyendo a un estado de ánimo equilibrado.</p>
+                        <p class="text-secondary">La fibra y los prebióticos de las plantas alimentan a tu microbioma intestinal, fortaleciendo tu sistema inmune, mejorando la absorción de nutrientes y contribuyendo a un estado de ánimo equilibrado.</p>
                     </div>
 
                  </div>
@@ -164,11 +194,24 @@
         </main>
 
         <!-- Footer -->
-        <footer class="text-center mt-16 py-6 border-t">
-            <p class="font-bold text-gray-700">AcoFood: La decisión inteligente para un futuro más sano.</p>
+        <footer class="text-center mt-16 py-6 border-t border-gray-300 dark:border-gray-600">
+            <p class="font-bold text-primary">AcoFood: La decisión inteligente para un futuro más sano.</p>
         </footer>
     </div>
     <script>
+        // Detectar y aplicar tema al cargar la página
+        function applyTheme() {
+            const savedTheme = localStorage.getItem('acofood_theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        // Aplicar tema inmediatamente
+        applyTheme();
+
         document.addEventListener('DOMContentLoaded', function () {
             const tooltipTitleCallback = (tooltipItems) => {
                 const item = tooltipItems[0];
@@ -177,18 +220,50 @@
                 return label;
             };
 
+            // Función para obtener colores según el tema
+            function getThemeColors() {
+                const isDark = document.documentElement.classList.contains('dark');
+                return {
+                    angleLines: isDark ? '#4A5568' : '#E2E8F0',
+                    grid: isDark ? '#4A5568' : '#E2E8F0', 
+                    pointLabels: isDark ? '#A0AEC0' : '#4A5568',
+                    ticks: isDark ? '#2D3748' : '#F8F9FA',
+                    ticksColor: isDark ? '#A0AEC0' : '#718096'
+                };
+            }
+
+            const themeColors = getThemeColors();
+
             const commonOptions = {
-                maintainAspectRatio: false, responsive: true,
+                maintainAspectRatio: false, 
+                responsive: true,
                 elements: { line: { borderWidth: 3 } },
                 scales: {
                     r: {
-                        angleLines: { color: '#E2E8F0' }, grid: { color: '#E2E8F0' },
-                        pointLabels: { font: { size: 12, weight: 'bold' }, color: '#4A5568' },
-                        ticks: { backdropColor: '#F8F9FA', color: '#718096' },
-                        suggestedMin: 0, suggestedMax: 10
+                        angleLines: { color: themeColors.angleLines }, 
+                        grid: { color: themeColors.grid },
+                        pointLabels: { 
+                            font: { size: 12, weight: 'bold' }, 
+                            color: themeColors.pointLabels 
+                        },
+                        ticks: { 
+                            backdropColor: themeColors.ticks, 
+                            color: themeColors.ticksColor 
+                        },
+                        suggestedMin: 0, 
+                        suggestedMax: 10
                     }
                 },
-                plugins: { tooltip: { callbacks: { title: tooltipTitleCallback } } }
+                plugins: { 
+                    tooltip: { 
+                        callbacks: { title: tooltipTitleCallback } 
+                    },
+                    legend: {
+                        labels: {
+                            color: themeColors.pointLabels
+                        }
+                    }
+                }
             };
 
             const ctxRealidad = document.getElementById('chartRealidad');
@@ -197,19 +272,23 @@
                     type: 'radar',
                     data: {
                         labels: [
-							['Perfil de', 'Aminoácidos'], 
-							['Fibra', 'Dietética'], 
-							['Grasas', 'Saturadas'], 
-							['Micronutrientes'], 
-							['Facilidad de', 'Digestión'], 
-							['Impacto', 'Inflamatorio']
-							],
+                            ['Perfil de', 'Aminoácidos'], 
+                            ['Fibra', 'Dietética'], 
+                            ['Grasas', 'Saturadas'], 
+                            ['Micronutrientes'], 
+                            ['Facilidad de', 'Digestión'], 
+                            ['Impacto', 'Inflamatorio']
+                        ],
                         datasets: [{
                             label: 'Proteína Animal (Típica)', data: [10, 0, 8, 6, 7, 8],
-                            backgroundColor: 'rgba(229, 62, 62, 0.2)', borderColor: 'rgb(229, 62, 62)', pointBackgroundColor: 'rgb(229, 62, 62)',
+                            backgroundColor: 'rgba(229, 62, 62, 0.2)', 
+                            borderColor: 'rgb(229, 62, 62)', 
+                            pointBackgroundColor: 'rgb(229, 62, 62)',
                         }, {
                             label: 'Proteína Vegetal (Combinada)', data: [10, 10, 2, 9, 9, 2],
-                            backgroundColor: 'rgba(56, 161, 105, 0.2)', borderColor: 'rgb(56, 161, 105)', pointBackgroundColor: 'rgb(56, 161, 105)',
+                            backgroundColor: 'rgba(56, 161, 105, 0.2)', 
+                            borderColor: 'rgb(56, 161, 105)', 
+                            pointBackgroundColor: 'rgb(56, 161, 105)',
                         }]
                     },
                     options: commonOptions
@@ -221,14 +300,23 @@
                 new Chart(ctxSolucion, {
                     type: 'radar',
                     data: {
-labels: [
-		['Fitoquímicos', 'Anti-cáncer'], ['Antioxidantes'], ['Fibra', 'Dietética'], ['Compuestos', 'Anti-inflamatorios'], ['Prebióticos', 'Intestinales']],
+                        labels: [
+                            ['Fitoquímicos', 'Anti-cáncer'], 
+                            ['Antioxidantes'], 
+                            ['Fibra', 'Dietética'], 
+                            ['Compuestos', 'Anti-inflamatorios'], 
+                            ['Prebióticos', 'Intestinales']
+                        ],
                         datasets: [{
                             label: 'Proteína Animal (Típica)', data: [0, 0, 1, 1, 0],
-                            backgroundColor: 'rgba(229, 62, 62, 0.2)', borderColor: 'rgb(229, 62, 62)', pointBackgroundColor: 'rgb(229, 62, 62)',
+                            backgroundColor: 'rgba(229, 62, 62, 0.2)', 
+                            borderColor: 'rgb(229, 62, 62)', 
+                            pointBackgroundColor: 'rgb(229, 62, 62)',
                         }, {
                             label: 'Proteína Vegetal (en su paquete)', data: [10, 10, 10, 10, 10],
-                            backgroundColor: 'rgba(56, 161, 105, 0.2)', borderColor: 'rgb(56, 161, 105)', pointBackgroundColor: 'rgb(56, 161, 105)',
+                            backgroundColor: 'rgba(56, 161, 105, 0.2)', 
+                            borderColor: 'rgb(56, 161, 105)', 
+                            pointBackgroundColor: 'rgb(56, 161, 105)',
                         }]
                     },
                     options: commonOptions

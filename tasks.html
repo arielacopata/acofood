@@ -54,23 +54,7 @@ function setupEventListeners() {
         
         if (window.taskUI) {
             window.taskUI.renderTaskSettings();
-			if (task.name === 'Custom Task') {
-			checkbox.addEventListener('change', async (e) => {
-			if (e.target.checked) {
-            // Preguntar qué tarea específica quiere
-            const customName = prompt('¿Qué tarea personalizada quieres agregar?', 'Tocar Guitarra');
-            if (customName && customName.trim()) {
-                // Guardar con el nombre específico
-                await window.taskAPI.updateUserTask(userCode, taskId, true, customName.trim());
-            } else {
-                e.target.checked = false; // Cancelar si no puso nombre
-            }
-        } else {
-            await window.taskAPI.updateUserTask(userCode, taskId, false);
-        }
-    });
-}
-		
+	
         }
     };
     
@@ -176,7 +160,7 @@ function setupEventListeners() {
 
             try {
 			
-				 const container = document.getElementById('tasks-container');
+				const container = document.getElementById('tasks-container');
 				const noTasksMessage = document.getElementById('no-tasks-message');
 				
 				// Limpiar contenido previo
@@ -214,7 +198,15 @@ function setupEventListeners() {
                             </div>
                         `;
                         
-                        taskCard.addEventListener('click', () => openTaskModal(taskType));
+                        taskCard.addEventListener('click', () => {
+						// Crear objeto con el nombre personalizado si existe
+						const displayTask = {
+							...taskType,
+							name: userTask.custom_name || taskType.name,
+							id: taskType.id
+						};
+						openTaskModal(displayTask);
+					});
                         container.appendChild(taskCard);
                     }
                 }
@@ -244,7 +236,8 @@ function setupEventListeners() {
             const content = document.getElementById('task-modal-content');
 
             title.textContent = taskType.name;
-            backdrop.style.display = 'flex';
+            title.dataset.taskId = taskType.id; // ← Guardar el ID aquí
+			backdrop.style.display = 'flex';
 
             // Generar contenido específico según el tipo de tarea
             if (taskType.id === VITAMINA_B12_TASK_ID) {
@@ -390,19 +383,16 @@ async function completeCustomTask(taskId) {
             document.getElementById('task-backdrop').style.display = 'none';
         }
 
-        function getCurrentTaskId() {
-            // Obtener el ID de la tarea actual desde el contexto del modal
-            const title = document.getElementById('task-modal-title').textContent;
-            // Esta función necesitaría mejorar para obtener el ID real
-            // Por ahora, retorna un placeholder
-            return 1;
-        }
+		function getCurrentTaskId() {
+			const title = document.getElementById('task-modal-title');
+			const taskId = parseInt(title.dataset.taskId);
+			return taskId;
+		}
 
         async function completeTask(taskId, details) {
             try {
                 await window.taskAPI.completeTask(userCode, taskId);
-                console.log(`Tarea ${taskId} completada: ${details}`);
-                
+                                
                 closeTaskModal();
                 await renderTasks(); // Re-renderizar para ocultar la tarea completada
                 
@@ -410,7 +400,6 @@ async function completeCustomTask(taskId) {
                 showToast('¡Tarea completada!');
                 
             } catch (error) {
-                console.error('Error completando tarea:', error);
                 showToast('Error al completar la tarea');
             }
         }

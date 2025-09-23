@@ -17,4 +17,16 @@ window.addEventListener('load', function() {
     }
 });
 
+window.directSupabaseQuery = async function(table, params) {
+    const query = new URLSearchParams(params).toString();
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, {
+        headers: {
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'apikey': SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json'
+        }
+    });
+    return await response.json();
+};
+
 console.log('shared.js loaded successfully');
