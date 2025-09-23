@@ -1081,3 +1081,30 @@ const additionalCSS = `
     font-size: 17px !important;
 }
 
+/* Uniformar anchos en el menú de configuración */
+#settings-menu input,
+#settings-menu select {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+#settings-menu .settings-item {
+    width: 100%;
+}
+
+#settings-menu .chip {
+    width: 100% !important;
+}
+
+/* Forzar ancho completo para el botón de información */
+#settings-menu a.chip {
+    width: 100% !important;
+    box-sizing: border-box;
+    display: flex !important;
+}
+
+/* Color verde específico */
+a[href="balance.v2.1.html"].chip {
+    background-color: #22c55e !important;
+    color: white !important;
+}
