@@ -35,7 +35,7 @@ const groupedFoods = [
   {"id": 4, "name": "Maní", "fullName": "Maní", "emoji": "🥜"},
   
   {"groupName": "Manzana", "emoji": "🍎", "variants": [
-  {"id": 52, "name": "Manzana Roja", "fullName": "Manzana Roja", "emoji": "🍎"},
+  {"id": 52, "name": "Manzana Roja", "fullName": "Manzana Roja"},
   {"id": 69, "name": "Manzana Verde", "fullName": "Manzana Verde"}
   ]},
   {"id": 6, "name": "Nueces", "fullName": "Nueces", "emoji": "🌰"},
@@ -100,7 +100,7 @@ const groupedFoods = [
     {"id": 74, "name": "Perejil", "fullName": "Perejil"},
     {"id": 78, "name": "Zapallito", "fullName": "Zapallito (Zucchini)"}
   ]},
-  {"groupName": "Morrones", "emoji": "🌶", "variants": [
+  {"groupName": "Morrones", "emoji": "🌶️", "variants": [
     {"id": 70, "name": "Rojo", "fullName": "Morrón rojo"},
     {"id": 71, "name": "Verde", "fullName": "Morrón verde"},
     {"id": 72, "name": "Amarillo", "fullName": "Morrón amarillo"}
