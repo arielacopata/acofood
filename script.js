@@ -447,11 +447,35 @@ const nutrientUnits = {
     "Vitamina B4 (Colina)": "mg", "Vitamina B6": "mg", "Vitamina B9 (Folato)": "mcg", "Vitamina B12": "mcg",
     "Omega-3": "g", "Omega-6": "g", "Omega-9": "g", "Colesterol": "mg", "Cafeína": "mg"
 };
+// Actualizar nutrientRDAs con los nuevos valores
 const nutrientRDAs = {
     "Fibra": 30, "Vitamina A": 900, "Vitamina C": 90, "Vitamina D": 15, "Vitamina E": 15, "Vitamina K": 120,
     "Calcio": 1000, "Hierro": 18, "Magnesio": 420, "Fósforo": 700, "Potasio": 3400, "Sodio": 2300, "Zinc": 11,
-    "Vitamina B1 (Tiamina)": 1.2, "Vitamina B2 (Riboflavina)": 1.3, "Vitamina B3 (Niacina)": 16, "Vitamina B6": 1.7, "Vitamina B9 (Folato)": 400
+    "Vitamina B1 (Tiamina)": 1.2, "Vitamina B2 (Riboflavina)": 1.3, "Vitamina B3 (Niacina)": 16, "Vitamina B6": 1.7, 
+    "Vitamina B9 (Folato)": 400, "Vitamina B4 (Colina)": 550, // en mg
+    "Omega-3": 1.6, // en g (basado en ALA)  
+    "Omega-6": 17   // en g
 };
+
+// Orden personalizado para el reporte nutricional
+const nutrientOrder = [
+    // Macronutrientes principales (destacados)
+    'Calorías', 'Proteínas', 'Grasas totales', 'Carbohidratos', 'Azúcares totales',
+    
+    // Micronutrientes (vitaminas y minerales con barras)
+    'Fibra', 
+    'Vitamina A', 'Vitamina B1 (Tiamina)', 'Vitamina B2 (Riboflavina)', 
+    'Vitamina B3 (Niacina)', 'Vitamina B4 (Colina)', 'Vitamina B6', 
+    'Vitamina B9 (Folato)', 'Vitamina C', 'Vitamina D', 'Vitamina E', 'Vitamina K',
+    'Calcio', 'Hierro', 'Magnesio', 'Fósforo', 'Potasio', 'Sodio', 'Zinc',
+    
+    // Ácidos grasos (al final)
+    'Omega-3', 'Omega-6', 'Omega-9'
+];
+
+
+// Macronutrientes principales que deben destacarse
+const mainMacronutrients = ['Calorías', 'Proteínas', 'Grasas totales', 'Carbohidratos'];
 
 const exerciseLevels = {
     1: ["1: Sedentario", "2: Bajo (1-2 días/sem)"],
@@ -1170,29 +1194,73 @@ function renderDetailedMacros() {
 
 function renderFullReport() {
     const contentDiv = document.getElementById('report-content');
-    const sortedNutrients = Object.keys(dailyTotals).sort((a, b) => a.localeCompare(b));
+    
+	
+    // Ordenamiento personalizado en lugar de alfabético
+    const sortedNutrients = Object.keys(dailyTotals).sort((a, b) => {
+        const indexA = nutrientOrder.indexOf(a);
+        const indexB = nutrientOrder.indexOf(b);
+        
+        // Si el nutriente no está en el orden personalizado, ponerlo al final alfabéticamente
+        if (indexA === -1 && indexB === -1) return a.localeCompare(b);
+        if (indexA === -1) return 1;
+        if (indexB === -1) return -1;
+        
+        return indexA - indexB;
+    });
+    
     let html = '';
-
+    
     sortedNutrients.forEach(key => {
-        if (dailyTotals[key] > 0) {
+        const showZeroOmegas = ['Omega-3', 'Omega-6', 'Omega-9'].includes(key);
+		if (dailyTotals[key] > 0 || showZeroOmegas) {
             const value = dailyTotals[key];
             const unit = nutrientUnits[key] || '';
-            const rda = nutrientRDAs[key];
+            const isMainMacro = mainMacronutrients.includes(key);
+            
+            // Determinar valor de referencia - usar goals para macronutrientes principales
+            let rda = nutrientRDAs[key];
+            
+            // Para macronutrientes principales, usar valores basados en goals
+            if (isMainMacro && dailyTotals['Calorías']) {
+                const totalCalories = dailyTotals['Calorías'];
+                switch(key) {
+                    case 'Calorías':
+                        rda = state.profile?.targetCalories || 2000;
+                        break;
+                    case 'Proteínas':
+                        rda = Math.round((totalCalories * (state.goals.protein / 100)) / 4);
+                        break;
+                    case 'Grasas totales':
+                        rda = Math.round((totalCalories * (state.goals.fat / 100)) / 9);
+                        break;
+                    case 'Carbohidratos':
+                        rda = Math.round((totalCalories * (state.goals.carbs / 100)) / 4);
+                        break;
+                }
+            }
+            
             let formattedValue = parseFloat(value.toFixed(3)).toString();
             
             const barColor = getBarColor(value, rda);
             const percentage = rda ? Math.min((value / rda) * 100, 200) : 0;
             
-            html += `<div class="report-item">
-                        <span>${key}</span>
-                        <span><b>${formattedValue}</b> ${unit}${rda ? ` / ${rda} ${unit}` : ''}</span>
+            // Clases CSS para macronutrientes principales
+            const itemClass = isMainMacro ? 'report-item main-macro-item' : 'report-item';
+            const nameClass = isMainMacro ? 'main-macro-name' : '';
+            const valueClass = isMainMacro ? 'main-macro-value' : '';
+            
+            html += `<div class="${itemClass}">
+                        <span class="${nameClass}">${key}</span>
+                        <span class="${valueClass}"><b>${formattedValue}</b> ${unit}${rda ? ` / ${rda} ${unit}` : ''}</span>
                         ${rda ? `<div class="progress-bar-container">
                             <div class="progress-bar" style="width: ${Math.min(percentage, 100)}%; background-color: ${barColor};"></div>
                         </div>` : ''}
                      </div>`;
         }
     });
-
+    
+    // Mantener la sección de suplementos como estaba
     const takenSupplements = state.history.filter(item => item.isSupplement);
     if(takenSupplements.length > 0){
         html += '<div class="section-title" style="margin-top: 20px;">Suplementos</div>';
@@ -1203,10 +1271,9 @@ function renderFullReport() {
                      </div>`;
         });
     }
-
+    
     contentDiv.innerHTML = html || '<div class="sub" style="text-align:center; padding: 20px 0;">No hay datos para mostrar.</div>';
 }
-
 // --- IMPORT / EXPORT ---
 function exportHistoryAsText() {
     if(state.history.length === 0) {

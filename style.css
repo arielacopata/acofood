@@ -1057,3 +1057,27 @@ input:checked + .toggle-slider:before {
 .iconbtn:active {
     transform: translateY(0px);
 }
+/ CSS adicional para agregar a style.css
+const additionalCSS = `
+/* Estilos para macronutrientes principales */
+.report-item.main-macro-item {
+    margin-bottom: 16px !important;
+    padding-bottom: 12px !important;
+    border-bottom: 2px solid var(--border);
+}
+
+.main-macro-name {
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    color: var(--fg) !important;
+}
+
+.main-macro-value {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+.main-macro-value b {
+    font-size: 17px !important;
+}
+
