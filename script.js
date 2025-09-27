@@ -449,35 +449,103 @@ const nutrientUnits = {
     // Otros
     "Omega-3": "g", "Omega-6": "g", "Omega-9": "g", "Colesterol": "mg", "Cafeína": "mg"
 };
-// Actualizar nutrientRDAs con los nuevos valores
+// ================================
+// RDAs (Recommended Dietary Allowances)
+// ================================
 const nutrientRDAs = {
     // Fibras y Vitaminas
-    "Fibra": 30, "Vitamina A": 900, "Vitamina C": 90, "Vitamina D": 15, "Vitamina E": 15, "Vitamina K": 120,
-    "Vitamina B1 (Tiamina)": 1.2, "Vitamina B2 (Riboflavina)": 1.3, "Vitamina B3 (Niacina)": 16, "Vitamina B6": 1.7, 
-    "Vitamina B9 (Folato)": 400, "Vitamina B4 (Colina)": 550,
+    "Fibra": 30,                       // g
+    "Vitamina A": 900,                 // µg
+    "Vitamina C": 90,                  // mg
+    "Vitamina D": 15,                  // µg (600 IU)
+    "Vitamina E": 15,                  // mg
+    "Vitamina K": 120,                 // µg
+    "Vitamina B1 (Tiamina)": 1.2,      // mg
+    "Vitamina B2 (Riboflavina)": 1.3,  // mg
+    "Vitamina B3 (Niacina)": 16,       // mg
+    "Vitamina B6": 1.7,                // mg
+    "Vitamina B9 (Folato)": 400,       // µg
     // Minerales
-    "Calcio": 1000, "Hierro": 18, "Magnesio": 420, "Fósforo": 700, "Potasio": 3400, "Sodio": 2300, "Zinc": 11,
-    "Cobre": 900, "Manganeso": 2.3, "Selenio": 55, "Yodo": 150, // <-- AÑADIDOS
+    "Calcio": 1000,   // mg
+    "Hierro": 18,     // mg (mujeres fértiles, ver función dinámica abajo)
+    "Magnesio": 420,  // mg
+    "Fósforo": 700,   // mg
+    "Potasio": 3400,  // mg
+    "Sodio": 2300,    // mg
+    "Zinc": 11,       // mg
+    "Cobre": 900,     // µg
+    "Manganeso": 2.3, // mg
+    "Selenio": 55,    // µg
+    "Yodo": 150,      // µg
     // Omegas
-    "Omega-3": 1.6, //en g (basado en ALA)
-    "Omega-6": 17 //en g
+    "Omega-3": 1.6,   // g (ALA, hombres)
+    "Omega-6": 17     // g
 };
+
+// ================================
+// AIs (Adequate Intake) → valores orientativos
+// ================================
+const nutrientAIs = {
+    "Vitamina B7 (Biotina)": 30,          // µg
+    "Vitamina B5 (Ácido pantoténico)": 5, // mg
+    "Vitamina B4 (Colina)": 550,          // mg
+    "Molibdeno": 45,                      // µg
+    "Cromo": 35,                          // µg
+    "Flúor": 4                            // mg
+};
+
+// ================================
+// Función flexible para obtener RDA/AI
+// con posibilidad de ajustes según sexo, edad, etc.
+// ================================
+function getNutrientRDA(nutrient, { sex = "male", age = 30, calories = 2000 } = {}) {
+    // 1. Buscar en RDAs
+    if (nutrientRDAs[nutrient]) return nutrientRDAs[nutrient];
+    // 2. Buscar en AIs
+    if (nutrientAIs[nutrient]) return nutrientAIs[nutrient];
+
+    // 3. Casos especiales dinámicos
+    if (nutrient === "Hierro") {
+        // Mujeres fértiles (<50 años): 18 mg
+        // Hombres y mujeres posmenopáusicas: 8 mg
+        return (sex === "female" && age < 50) ? 18 : 8;
+    }
+    if (nutrient === "Fibra") {
+        // Hombres <50: 38 g, Mujeres <50: 25 g
+        return (sex === "male" && age < 50) ? 38 : 25;
+    }
+    if (nutrient === "Omega-3") {
+        // ALA: hombres 1.6 g, mujeres 1.1 g
+        return sex === "male" ? 1.6 : 1.1;
+    }
+
+    // 4. Default → si no hay referencia
+    return null;
+}
+
 
 // Orden personalizado para el reporte nutricional
 const nutrientOrder = [
-    // Macronutrientes principales (destacados)
+    // ⚡ Macronutrientes principales
     'Calorías', 'Proteínas', 'Grasas totales', 'Carbohidratos', 'Azúcares totales',
     
-    // Micronutrientes (vitaminas y minerales con barras)
-    'Fibra', 
+    // 🌾 Fibra y omegas esenciales
+    'Fibra', 'Omega-3', 'Omega-6', 'Omega-9',
+    
+    // 🧴 Vitaminas (con RDA)
     'Vitamina A', 'Vitamina B1 (Tiamina)', 'Vitamina B2 (Riboflavina)', 
-    'Vitamina B3 (Niacina)', 'Vitamina B4 (Colina)', 'Vitamina B6', 
-    'Vitamina B9 (Folato)', 'Vitamina C', 'Vitamina D', 'Vitamina E', 'Vitamina K',
-    'Calcio', 'Hierro', 'Magnesio', 'Fósforo', 'Potasio', 'Sodio', 'Zinc',
-    'Cobre', 'Manganeso', 'Selenio', 'Yodo', // <-- AÑADIDOS
+    'Vitamina B3 (Niacina)', 'Vitamina B6', 'Vitamina B9 (Folato)', 
+    'Vitamina C', 'Vitamina D', 'Vitamina E', 'Vitamina K',
 
-    // Ácidos grasos (al final)
-    'Omega-3', 'Omega-6', 'Omega-9'
+    // 🧪 Vitaminas (AI)
+    'Vitamina B4 (Colina)', 'Vitamina B5 (Ácido pantoténico)', 'Vitamina B7 (Biotina)',
+    
+    // 🧱 Minerales (RDA)
+    'Calcio', 'Hierro', 'Magnesio', 'Fósforo', 'Potasio', 'Sodio', 'Zinc',
+    'Cobre', 'Manganeso', 'Selenio', 'Yodo',
+
+    // ⚗️ Minerales (AI)
+    'Molibdeno', 'Cromo', 'Flúor'
 ];
 
 
