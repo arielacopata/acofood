@@ -1,6 +1,3 @@
-// --- DATA START ---
-// Para añadir todos los alimentos, reemplaza el contenido de las dos
-// constantes de abajo con los archivos foods-data.js y nutrients-data.js
 document.addEventListener("DOMContentLoaded", () => {
 const searchInput = document.querySelector('#search-input');
 const searchBar = document.querySelector('.searchbar');
@@ -439,22 +436,31 @@ const supplements = [
 ];
 
 const nutrientUnits = {
+    // Macronutrientes
     "Calorías": "kcal", "Proteínas": "g", "Carbohidratos": "g", "Fibra": "g", "Azúcares totales": "g",
     "Azúcares añadidos": "g", "Grasas totales": "g", "Grasas saturadas": "g", "Grasas trans": "g",
+    // Minerales
     "Calcio": "mg", "Hierro": "mg", "Magnesio": "mg", "Fósforo": "mg", "Potasio": "mg", "Sodio": "mg", "Zinc": "mg",
+    "Cobre": "mcg", "Manganeso": "mg", "Selenio": "mcg", "Yodo": "mcg", // <-- AÑADIDOS
+    // Vitaminas
     "Vitamina A": "mcg", "Vitamina C": "mg", "Vitamina D": "mcg", "Vitamina E": "mg", "Vitamina K": "mcg",
     "Vitamina B1 (Tiamina)": "mg", "Vitamina B2 (Riboflavina)": "mg", "Vitamina B3 (Niacina)": "mg",
     "Vitamina B4 (Colina)": "mg", "Vitamina B6": "mg", "Vitamina B9 (Folato)": "mcg", "Vitamina B12": "mcg",
+    // Otros
     "Omega-3": "g", "Omega-6": "g", "Omega-9": "g", "Colesterol": "mg", "Cafeína": "mg"
 };
 // Actualizar nutrientRDAs con los nuevos valores
 const nutrientRDAs = {
+    // Fibras y Vitaminas
     "Fibra": 30, "Vitamina A": 900, "Vitamina C": 90, "Vitamina D": 15, "Vitamina E": 15, "Vitamina K": 120,
-    "Calcio": 1000, "Hierro": 18, "Magnesio": 420, "Fósforo": 700, "Potasio": 3400, "Sodio": 2300, "Zinc": 11,
     "Vitamina B1 (Tiamina)": 1.2, "Vitamina B2 (Riboflavina)": 1.3, "Vitamina B3 (Niacina)": 16, "Vitamina B6": 1.7, 
-    "Vitamina B9 (Folato)": 400, "Vitamina B4 (Colina)": 550, // en mg
-    "Omega-3": 1.6, // en g (basado en ALA)  
-    "Omega-6": 17   // en g
+    "Vitamina B9 (Folato)": 400, "Vitamina B4 (Colina)": 550,
+    // Minerales
+    "Calcio": 1000, "Hierro": 18, "Magnesio": 420, "Fósforo": 700, "Potasio": 3400, "Sodio": 2300, "Zinc": 11,
+    "Cobre": 900, "Manganeso": 2.3, "Selenio": 55, "Yodo": 150, // <-- AÑADIDOS
+    // Omegas
+    "Omega-3": 1.6, //en g (basado en ALA)
+    "Omega-6": 17 //en g
 };
 
 // Orden personalizado para el reporte nutricional
@@ -468,7 +474,8 @@ const nutrientOrder = [
     'Vitamina B3 (Niacina)', 'Vitamina B4 (Colina)', 'Vitamina B6', 
     'Vitamina B9 (Folato)', 'Vitamina C', 'Vitamina D', 'Vitamina E', 'Vitamina K',
     'Calcio', 'Hierro', 'Magnesio', 'Fósforo', 'Potasio', 'Sodio', 'Zinc',
-    
+    'Cobre', 'Manganeso', 'Selenio', 'Yodo', // <-- AÑADIDOS
+
     // Ácidos grasos (al final)
     'Omega-3', 'Omega-6', 'Omega-9'
 ];
@@ -1631,4 +1638,3 @@ async function init() {
 }
 
 window.addEventListener('load', init);
-
