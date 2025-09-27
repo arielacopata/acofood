@@ -1198,89 +1198,96 @@ function renderDetailedMacros() {
     }).join('');
 }
 
-
 function renderFullReport() {
     const contentDiv = document.getElementById('report-content');
-    
-	
+
     // Ordenamiento personalizado en lugar de alfabético
     const sortedNutrients = Object.keys(dailyTotals).sort((a, b) => {
         const indexA = nutrientOrder.indexOf(a);
         const indexB = nutrientOrder.indexOf(b);
-        
-        // Si el nutriente no está en el orden personalizado, ponerlo al final alfabéticamente
+
         if (indexA === -1 && indexB === -1) return a.localeCompare(b);
         if (indexA === -1) return 1;
         if (indexB === -1) return -1;
-        
+
         return indexA - indexB;
     });
-    
+
     let html = '';
-    
+
     sortedNutrients.forEach(key => {
         const showZeroOmegas = ['Omega-3', 'Omega-6', 'Omega-9'].includes(key);
-		if (dailyTotals[key] > 0 || showZeroOmegas) {
+        if (dailyTotals[key] > 0 || showZeroOmegas) {
             const value = dailyTotals[key];
             const unit = nutrientUnits[key] || '';
             const isMainMacro = mainMacronutrients.includes(key);
-            
-            // Determinar valor de referencia - usar goals para macronutrientes principales
-            let rda = nutrientRDAs[key];
-            
-            // Para macronutrientes principales, usar valores basados en goals
+
+            // Determinar valor de referencia
+            let rda = nutrientRDAs[key] || null;
+            let ai = nutrientAIs[key] || null;
+            let referenceType = rda ? "RDA" : (ai ? "AI" : null);
+            let referenceValue = rda || ai;
+
+            // Ajustes dinámicos para macros y nutrientes especiales
             if (isMainMacro && dailyTotals['Calorías']) {
                 const totalCalories = dailyTotals['Calorías'];
-                switch(key) {
+                switch (key) {
                     case 'Calorías':
-                        rda = state.profile?.targetCalories || 2000;
+                        referenceValue = state.profile?.targetCalories || 2000;
+                        referenceType = "Meta";
                         break;
                     case 'Proteínas':
-                        rda = Math.round((totalCalories * (state.goals.protein / 100)) / 4);
+                        referenceValue = Math.round((totalCalories * (state.goals.protein / 100)) / 4);
+                        referenceType = "Meta";
                         break;
                     case 'Grasas totales':
-                        rda = Math.round((totalCalories * (state.goals.fat / 100)) / 9);
+                        referenceValue = Math.round((totalCalories * (state.goals.fat / 100)) / 9);
+                        referenceType = "Meta";
                         break;
                     case 'Carbohidratos':
-                        rda = Math.round((totalCalories * (state.goals.carbs / 100)) / 4);
+                        referenceValue = Math.round((totalCalories * (state.goals.carbs / 100)) / 4);
+                        referenceType = "Meta";
                         break;
                 }
             }
-            
+
             let formattedValue = parseFloat(value.toFixed(3)).toString();
-            
-            const barColor = getBarColor(value, rda);
-            const percentage = rda ? Math.min((value / rda) * 100, 200) : 0;
-            
-            // Clases CSS para macronutrientes principales
+            const barColor = getBarColor(value, referenceValue);
+            const percentage = referenceValue ? Math.min((value / referenceValue) * 100, 200) : 0;
+
             const itemClass = isMainMacro ? 'report-item main-macro-item' : 'report-item';
             const nameClass = isMainMacro ? 'main-macro-name' : '';
             const valueClass = isMainMacro ? 'main-macro-value' : '';
-            
+
             html += `<div class="${itemClass}">
                         <span class="${nameClass}">${key}</span>
-                        <span class="${valueClass}"><b>${formattedValue}</b> ${unit}${rda ? ` / ${rda} ${unit}` : ''}</span>
-                        ${rda ? `<div class="progress-bar-container">
+                        <span class="${valueClass}">
+                            <b>${formattedValue}</b> ${unit}
+                            ${referenceValue ? ` / ${referenceValue} ${unit} <small>(${referenceType})</small>` : ''}
+                        </span>
+                        ${referenceValue ? `<div class="progress-bar-container">
                             <div class="progress-bar" style="width: ${Math.min(percentage, 100)}%; background-color: ${barColor};"></div>
                         </div>` : ''}
                      </div>`;
         }
     });
-    
+
     // Mantener la sección de suplementos como estaba
     const takenSupplements = state.history.filter(item => item.isSupplement);
-    if(takenSupplements.length > 0){
+    if (takenSupplements.length > 0) {
         html += '<div class="section-title" style="margin-top: 20px;">Suplementos</div>';
         takenSupplements.forEach(sup => {
-             html += `<div class="report-item">
+            html += `<div class="report-item">
                         <span>${sup.food}</span>
                         <span><b>${sup.qty}</b></span>
                      </div>`;
         });
     }
-    
+
     contentDiv.innerHTML = html || '<div class="sub" style="text-align:center; padding: 20px 0;">No hay datos para mostrar.</div>';
 }
+
+
 // --- IMPORT / EXPORT ---
 function exportHistoryAsText() {
     if(state.history.length === 0) {
