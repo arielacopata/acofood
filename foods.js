@@ -83,7 +83,13 @@ const groupedFoods = [
     {"id": 73, "name": "Pera", "fullName": "Pera"},
     {"id": 79, "name": "Arándanos", "fullName": "Arándanos"},
     {"id": 80, "name": "Frutilla", "fullName": "Frutilla"},
-    {"id": 81, "name": "Sandía", "fullName": "Sandía"}
+    {"id": 81, "name": "Sandía", "fullName": "Sandía"},
+    {"id": 94, "name": "Durazno", "fullName": "Durazno", "emoji": "🍑"},
+    {"id": 95, "name": "Kiwi", "fullName": "Kiwi", "emoji": "🥝"},
+    {"id": 96, "name": "Ananá", "fullName": "Ananá (Piña)", "emoji": "🍍"},
+    {"id": 97, "name": "Mango", "fullName": "Mango", "emoji": "🥭"},
+    {"id": 98, "name": "Uva", "fullName": "Uva", "emoji": "🍇"},
+    {"id": 99, "name": "Cereza", "fullName": "Cereza", "emoji": "🍒"}
   ]},
   {"groupName": "Melón", "emoji": "🍈", "variants": [
     {"id": 82, "name": "Cantalupo", "fullName": "Melón (Cantalupo)"},
@@ -98,8 +104,14 @@ const groupedFoods = [
     {"id": 67, "name": "Coliflor", "fullName": "Coliflor"},
     {"id": 68, "name": "Espinaca", "fullName": "Espinaca"},
     {"id": 74, "name": "Perejil", "fullName": "Perejil"},
-    {"id": 78, "name": "Zapallito", "fullName": "Zapallito (Zucchini)"}
+    {"id": 78, "name": "Zapallito", "fullName": "Zapallito (Zucchini)"},
+    {"id": 100, "name": "Berenjena", "fullName": "Berenjena (Cocida)", "emoji": "🍆"},
+    {"id": 102, "name": "Espárragos", "fullName": "Espárragos (Cocidos)", "emoji": "🌿"},
+    {"id": 103, "name": "Puerro", "fullName": "Puerro (Cocido)", "emoji": "🧅"},
+    {"id": 104, "name": "Apio", "fullName": "Apio (Crudo)", "emoji": "🌿"},
+    {"id": 105, "name": "Bok Choy", "fullName": "Bok Choy (Pak Choi, Cocido)", "emoji": "🥬"}
   ]},
+  {"id": 101, "name": "Champiñones", "fullName": "Champiñones (Salteados)", "emoji": "🍄"},
   {"groupName": "Morrones", "emoji": "🌶️", "variants": [
     {"id": 70, "name": "Rojo", "fullName": "Morrón rojo"},
     {"id": 71, "name": "Verde", "fullName": "Morrón verde"},
@@ -115,7 +127,10 @@ const groupedFoods = [
     {"id": 53, "name": "Cúrcuma", "fullName": "Cúrcuma (molida)"},
     {"id": 55, "name": "Pimentón", "fullName": "Pimentón"},
     {"id": 56, "name": "Orégano", "fullName": "Orégano (seco)"},
-    {"id": 57, "name": "Jengibre", "fullName": "Jengibre (raíz)"}
+    {"id": 57, "name": "Jengibre", "fullName": "Jengibre (raíz)"},
+    {"id": 113, "name": "Albahaca", "fullName": "Albahaca (Fresca)", "emoji": "🌿"},
+    {"id": 114, "name": "Cilantro", "fullName": "Cilantro (Fresco)", "emoji": "🌿"},
+    {"id": 115, "name": "Menta", "fullName": "Menta (Fresca)", "emoji": "🌿"}
   ]},
   {"groupName": "Aceitunas", "emoji": "🟢", "variants": [
     {"id": 65, "name": "Aceitunas Negras", "fullName": "Aceitunas Negras"},
@@ -128,8 +143,18 @@ const groupedFoods = [
   {"groupName": "Despensa", "emoji": "🥫", "variants": [
     {"id": 54, "name": "Coco Rallado", "fullName": "Coco Rallado (sin azúcar)"},
     {"id": 87, "name": "Cacao 100%", "fullName": "Cacao en polvo (100%)"},
-    {"id": 88, "name": "Vinagre Manzana", "fullName": "Vinagre de Manzana"}
-  ]}
+    {"id": 88, "name": "Vinagre Manzana", "fullName": "Vinagre de Manzana"},
+    {"id": 110, "name": "Tofu", "fullName": "Tofu (Firme)", "emoji": "⬜"},
+    {"id": 111, "name": "Levadura Nutricional", "fullName": "Levadura Nutricional", "emoji": "🧀"},
+    {"id": 112, "name": "Arvejas", "fullName": "Arvejas (Guisantes, Cocidas)", "emoji": "🟢"}
+
+  ]},
+  {"groupName": "Cereales y Granos", "emoji": "🌾", "variants": [
+    {"id": 106, "name": "Arroz Integral", "fullName": "Arroz Integral (Cocido)"},
+    {"id": 107, "name": "Arroz Blanco", "fullName": "Arroz Blanco (Cocido)"},
+    {"id": 108, "name": "Trigo Burgol", "fullName": "Trigo Burgol (Cocido)"},
+    {"id": 109, "name": "Choclo", "fullName": "Choclo (Maíz, Cocido)"}
+]}
 ];
 // Unidades: Vitamina B5 (mg), Vitamina B7 (mcg), Molibdeno (mcg), Cromo (mcg), Flúor (mcg)
 const nutrientsData = {
