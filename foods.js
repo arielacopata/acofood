@@ -85,8 +85,6 @@ const groupedFoods = [
     {"id": 80, "name": "Frutilla", "fullName": "Frutilla"},
     {"id": 81, "name": "Sandía", "fullName": "Sandía"},
     {"id": 94, "name": "Durazno", "fullName": "Durazno", "emoji": "🍑"},
-    {"id": 95, "name": "Kiwi pelado", "fullName": "Kiwi pelado", "emoji": "🥝"},
-    {"id": 116, "name": "Kiwi con cáscara", "fullName": "Kiwi con cáscara", "emoji": "🥝"},
     {"id": 96, "name": "Ananá", "fullName": "Ananá (Piña)", "emoji": "🍍"},
     {"id": 97, "name": "Mango", "fullName": "Mango", "emoji": "🥭"},
     {"id": 98, "name": "Uva", "fullName": "Uva", "emoji": "🍇"},
@@ -155,7 +153,11 @@ const groupedFoods = [
     {"id": 107, "name": "Arroz Blanco", "fullName": "Arroz Blanco (Cocido)"},
     {"id": 108, "name": "Trigo Burgol", "fullName": "Trigo Burgol (Cocido)"},
     {"id": 109, "name": "Choclo", "fullName": "Choclo (Maíz, Cocido)"}
-]}
+]},
+    {"groupName": "Kiwi", "emoji": "🥝", "variants": [
+    {"id": 95, "name": "Kiwi pelado", "fullName": "Kiwi pelado"},
+    {"id": 116, "name": "Kiwi con cáscara", "fullName": "Kiwi con cáscara"}
+  ]},
 ];
 // Unidades: Vitamina B5 (mg), Vitamina B7 (mcg), Molibdeno (mcg), Cromo (mcg), Flúor (mcg)
 const nutrientsData = {
@@ -265,5 +267,5 @@ const nutrientsData = {
   "113": {"Calorías": 23, "Proteínas": 3.2, "Carbohidratos": 2.7, "Fibra": 1.6, "Azúcares totales": 0.3, "Azúcares añadidos": 0, "Grasas totales": 0.6, "Grasas saturadas": 0.0, "Grasas trans": 0, "Calcio": 177, "Hierro": 3.2, "Magnesio": 64, "Fósforo": 56, "Potasio": 295, "Sodio": 4, "Zinc": 0.81, "Cobre": 0.39, "Manganeso": 1.1, "Selenio": 0.3, "Yodo": 0, "Vitamina A": 264, "Vitamina C": 18.0, "Vitamina D": 0, "Vitamina E": 0.8, "Vitamina K": 415.0, "Vitamina B1 (Tiamina)": 0.03, "Vitamina B2 (Riboflavina)": 0.08, "Vitamina B3 (Niacina)": 0.9, "Vitamina B4 (Colina)": 11.0, "Vitamina B6": 0.16, "Vitamina B9 (Folato)": 68, "Vitamina B12": 0, "Vitamina B5 (Ácido pantoténico)": 0.21, "Vitamina B7 (Biotina)": 0, "Molibdeno": 0, "Cromo": 0, "Flúor": 0, "Omega-3": 0.39, "Omega-6": 0, "Omega-9": 0.09, "Colesterol": 0, "Cafeína": 0},
   "114": {"Calorías": 23, "Proteínas": 2.1, "Carbohidratos": 3.7, "Fibra": 2.8, "Azúcares totales": 0.9, "Azúcares añadidos": 0, "Grasas totales": 1.5, "Grasas saturadas": 0, "Grasas trans": 0, "Calcio": 86, "Hierro": 4.5, "Magnesio": 30, "Fósforo": 54, "Potasio": 540, "Sodio": 45, "Zinc": 0.55, "Cobre": 0.09, "Manganeso": 0.47, "Selenio": 0, "Yodo": 9.8, "Vitamina A": 515, "Vitamina C": 30.0, "Vitamina D": 0, "Vitamina E": 1.7, "Vitamina K": 310.0, "Vitamina B1 (Tiamina)": 0.1, "Vitamina B2 (Riboflavina)": 0.19, "Vitamina B3 (Niacina)": 0.2, "Vitamina B4 (Colina)": 0, "Vitamina B6": 0.08, "Vitamina B9 (Folato)": 126, "Vitamina B12": 0, "Vitamina B5 (Ácido pantoténico)": 0.54, "Vitamina B7 (Biotina)": 0, "Molibdeno": 49, "Cromo": 0, "Flúor": 0, "Omega-3": 0, "Omega-6": 0.05, "Omega-9": 0.37, "Colesterol": 0, "Cafeína": 0},
   "115": {"Calorías": 58, "Proteínas": 3.5, "Carbohidratos": 5.3, "Fibra": 7.4, "Azúcares totales": 5.3, "Azúcares añadidos": 0, "Grasas totales": 0.8, "Grasas saturadas": 0.2, "Grasas trans": 0, "Calcio": 221, "Hierro": 8.5, "Magnesio": 72, "Fósforo": 67, "Potasio": 514, "Sodio": 31, "Zinc": 1.1, "Cobre": 0.28, "Manganeso": 1.15, "Selenio": 0, "Yodo": 0, "Vitamina A": 123, "Vitamina C": 22.6, "Vitamina D": 0, "Vitamina E": 5.0, "Vitamina K": 0, "Vitamina B1 (Tiamina)": 0.08, "Vitamina B2 (Riboflavina)": 0.22, "Vitamina B3 (Niacina)": 1.33, "Vitamina B4 (Colina)": 0, "Vitamina B6": 0.14, "Vitamina B9 (Folato)": 110, "Vitamina B12": 0, "Vitamina B5 (Ácido pantoténico)": 0.29, "Vitamina B7 (Biotina)": 0, "Molibdeno": 0, "Cromo": 0, "Flúor": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0},
-  "95": {"Calorías": 73, "Proteínas": 1.3, "Carbohidratos": 16.2, "Fibra": 4.5, "Azúcares totales": 9.0, "Azúcares añadidos": 0, "Grasas totales": 0.6, "Grasas saturadas": 0.1, "Grasas trans": 0, "Calcio": 69.1, "Hierro": 0.34, "Magnesio": 28.3, "Fósforo": 42.6, "Potasio": 686.2, "Sodio": 4.1, "Zinc": 0.15, "Cobre": 0.14, "Manganeso": 0.11, "Selenio": 0.22, "Yodo": 0, "Vitamina A": 4.4, "Vitamina C": 102.0, "Vitamina D": 0, "Vitamina E": 1.94, "Vitamina K": 44.3, "Vitamina B1 (Tiamina)": 0.030, "Vitamina B2 (Riboflavina)": 0.028, "Vitamina B3 (Niacina)": 0.375, "Vitamina B4 (Colina)": 8.6, "Vitamina B6": 0.069, "Vitamina B9 (Folato)": 33.3, "Vitamina B12": 0, "Vitamina B5 (Ácido pantoténico)": 0.201, "Vitamina B7 (Biotina)": 0, "Molibdeno": 0, "Cromo": 0, "Flúor": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0}
+  "116": {"Calorías": 73, "Proteínas": 1.3, "Carbohidratos": 16.2, "Fibra": 4.5, "Azúcares totales": 9.0, "Azúcares añadidos": 0, "Grasas totales": 0.6, "Grasas saturadas": 0.1, "Grasas trans": 0, "Calcio": 69.1, "Hierro": 0.34, "Magnesio": 28.3, "Fósforo": 42.6, "Potasio": 686.2, "Sodio": 4.1, "Zinc": 0.15, "Cobre": 0.14, "Manganeso": 0.11, "Selenio": 0.22, "Yodo": 0, "Vitamina A": 4.4, "Vitamina C": 102.0, "Vitamina D": 0, "Vitamina E": 1.94, "Vitamina K": 44.3, "Vitamina B1 (Tiamina)": 0.030, "Vitamina B2 (Riboflavina)": 0.028, "Vitamina B3 (Niacina)": 0.375, "Vitamina B4 (Colina)": 8.6, "Vitamina B6": 0.069, "Vitamina B9 (Folato)": 33.3, "Vitamina B12": 0, "Vitamina B5 (Ácido pantoténico)": 0.201, "Vitamina B7 (Biotina)": 0, "Molibdeno": 0, "Cromo": 0, "Flúor": 0, "Omega-3": 0, "Omega-6": 0, "Omega-9": 0, "Colesterol": 0, "Cafeína": 0}
 }
